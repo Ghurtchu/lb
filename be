@@ -1,5 +1,3 @@
 #!/bin/sh
 
-cd ~/lb
-
-scala lb.jar $1
+python3 echoer.py $1
