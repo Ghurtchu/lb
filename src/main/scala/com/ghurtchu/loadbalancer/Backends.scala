@@ -1,6 +1,6 @@
 package com.ghurtchu.loadbalancer
 
-final case class Backends private(urls: Vector[String]) extends AnyVal {
+final case class Backends(urls: Vector[String]) extends AnyVal {
 
   def next: Backends = {
     val head = urls.head
@@ -14,10 +14,5 @@ final case class Backends private(urls: Vector[String]) extends AnyVal {
 }
 
 object Backends {
-
-  import Option._
-
-  def apply(urls: String*): Backends =
-    when(urls.length >= 2)(new Backends(urls.toVector))
-      .getOrElse(throw new RuntimeException("at least two urls must be provided"))
+  def empty: Backends = Backends(Vector.empty)
 }

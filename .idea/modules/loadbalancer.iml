@@ -17,7 +17,12 @@
     <orderEntry type="library" name="sbt: co.fs2:fs2-io_2.13:3.7.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.chuusai:shapeless_2.13:2.3.10:jar" level="project" />
     <orderEntry type="library" name="sbt: com.comcast:ip4s-core_2.13:3.3.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.github.pureconfig:pureconfig-core_2.13:0.17.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.github.pureconfig:pureconfig-generic-base_2.13:0.17.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.github.pureconfig:pureconfig-generic_2.13:0.17.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.github.pureconfig:pureconfig_2.13:0.17.4:jar" level="project" />
     <orderEntry type="library" name="sbt: com.twitter:hpack:1.0.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe:config:1.4.2:jar" level="project" />
     <orderEntry type="library" name="sbt: io.circe:circe-core_2.13:0.14.5:jar" level="project" />
     <orderEntry type="library" name="sbt: io.circe:circe-generic_2.13:0.14.5:jar" level="project" />
     <orderEntry type="library" name="sbt: io.circe:circe-jawn_2.13:0.14.5:jar" level="project" />
