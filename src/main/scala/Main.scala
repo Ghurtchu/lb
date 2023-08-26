@@ -3,6 +3,7 @@ import com.comcast.ip4s.Port
 import com.ghurtchu.loadbalancer.{Backends, LoadbalancerServer}
 
 import scala.util.Try
+
 object Main extends IOApp {
 
   private val BackendsRef: IO[Ref[IO, Backends]] =
