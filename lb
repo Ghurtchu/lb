@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd ~/build-your-own-stuff/load-balancer
+cd ~/lb
 
 scala lb.jar $1
