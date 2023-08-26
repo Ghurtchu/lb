@@ -1,24 +1,24 @@
 [0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 2 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 3 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFilter jars start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 0 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 1 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 34 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 15 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect renames start:[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 70 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mProcess renames start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 22 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 20 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 90 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 83 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mBuilding assembly jar due to missing output...[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 1146 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerge all conflicting jar entries (including those renamed) end. Took 1044 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mReport merge results start:[0m
 [0m[[0m[0minfo[0m] [0m[0m7 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -47,7 +47,7 @@
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = ip4s-core_2.13-3.3.0.jar, jar org = com.comcast, entry target = NOTICE[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = scala-library-2.13.11.jar, jar org = org.scala-lang, entry target = NOTICE[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = scala-reflect-2.13.11.jar, jar org = org.scala-lang, entry target = NOTICE[0m
-[0m[[0m[0minfo[0m] [0m[0m53 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m58 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge Strategy Used: Discard[0m
 [0m[[0m[0mdebug[0m] [0m[0mResulting entries:[0m
@@ -109,7 +109,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = fs2-io_2.13-3.7.0.jar, jar org = co.fs2, entry target = META-INF/MANIFEST.MF[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = shapeless_2.13-2.3.10.jar, jar org = com.chuusai, entry target = META-INF/MANIFEST.MF[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = ip4s-core_2.13-3.3.0.jar, jar org = com.comcast, entry target = META-INF/MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = pureconfig-core_2.13-0.17.4.jar, jar org = com.github.pureconfig, entry target = META-INF/MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = pureconfig-generic-base_2.13-0.17.4.jar, jar org = com.github.pureconfig, entry target = META-INF/MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = pureconfig-generic_2.13-0.17.4.jar, jar org = com.github.pureconfig, entry target = META-INF/MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = pureconfig_2.13-0.17.4.jar, jar org = com.github.pureconfig, entry target = META-INF/MANIFEST.MF[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = hpack-1.0.2.jar, jar org = com.twitter, entry target = META-INF/MANIFEST.MF[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Jar name = config-1.4.2.jar, jar org = com.typesafe, entry target = META-INF/MANIFEST.MF[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = circe-core_2.13-0.14.5.jar, jar org = io.circe, entry target = META-INF/MANIFEST.MF[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = circe-generic_2.13-0.14.5.jar, jar org = io.circe, entry target = META-INF/MANIFEST.MF[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = circe-jawn_2.13-0.14.5.jar, jar org = io.circe, entry target = META-INF/MANIFEST.MF[0m
@@ -156,16 +161,16 @@
 [0m[[0m[0mdebug[0m] [0m[0m  None[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerge origins:[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Jar name = slf4j-api-2.0.7.jar, jar org = org.slf4j, entry target = META-INF/maven/org.slf4j/slf4j-api/pom.xml[0m
-[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 9 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mReport merge results end. Took 18 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 55 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFinding remaining conflicts that were not merged end. Took 54 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 18 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mSort/Parallelize merged entries end. Took 17 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 1951 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate jar end. Took 2039 ms[0m
 [0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 129 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mHash newly-built Jar end. Took 131 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mBuilt: /Users/aghurtchumelia/Personal/lb/target/scala-2.13/lb.jar[0m
-[0m[[0m[0minfo[0m] [0m[0mJar hash: 7e42de0e97d1eee6b2ae2a390ae5820f07687b96[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 6a6d3c1322b677ffaa64f31e4a6fc1ab57302d7d[0m
 [0m[[0m[0mdebug[0m] [0m[0mClose library jar references start:[0m
-[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 8 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 6 ms[0m

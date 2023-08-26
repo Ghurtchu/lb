@@ -1,0 +1,9 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(assembly, Some(1101972b-c955-4811-adfe-72559c94f617), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: assembly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0m7 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m58 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /Users/aghurtchumelia/Personal/lb/target/scala-2.13/lb.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 6a6d3c1322b677ffaa64f31e4a6fc1ab57302d7d[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 4 s, completed Aug 27, 2023, 12:10:10 AM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
