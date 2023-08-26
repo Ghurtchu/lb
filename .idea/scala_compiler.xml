@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="sbt 1" modules="lb_6482" />
+    <profile name="sbt 2" modules="loadbalancer">
+      <option name="implicitConversions" value="true" />
+      <option name="higherKinds" value="true" />
+      <option name="existentials" value="true" />
+      <option name="macros" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-encoding" />
+        <parameter value="utf8" />
+        <parameter value="-Xlint:adapted-args" />
+        <parameter value="-Xlint:constant" />
+        <parameter value="-Xlint:delayedinit-select" />
+        <parameter value="-Xlint:deprecation" />
+        <parameter value="-Xlint:doc-detached" />
+        <parameter value="-Xlint:implicit-recursion" />
+        <parameter value="-Xlint:implicit-not-found" />
+        <parameter value="-Xlint:inaccessible" />
+        <parameter value="-Xlint:infer-any" />
+        <parameter value="-Xlint:missing-interpolator" />
+        <parameter value="-Xlint:nullary-unit" />
+        <parameter value="-Xlint:option-implicit" />
+        <parameter value="-Xlint:package-object-classes" />
+        <parameter value="-Xlint:poly-implicit-overload" />
+        <parameter value="-Xlint:private-shadow" />
+        <parameter value="-Xlint:stars-align" />
+        <parameter value="-Xlint:strict-unsealed-patmat" />
+        <parameter value="-Xlint:type-parameter-shadow" />
+        <parameter value="-Xlint:-byname-implicit" />
+        <parameter value="-Wdead-code" />
+        <parameter value="-Wextra-implicit" />
+        <parameter value="-Wnumeric-widen" />
+        <parameter value="-Wvalue-discard" />
+        <parameter value="-Wnonunit-statement" />
+        <parameter value="-Wunused:nowarn" />
+        <parameter value="-Wunused:implicits" />
+        <parameter value="-Wunused:explicits" />
+        <parameter value="-Wunused:imports" />
+        <parameter value="-Wunused:locals" />
+        <parameter value="-Wunused:params" />
+        <parameter value="-Wunused:patvars" />
+        <parameter value="-Wunused:privates" />
+        <parameter value="-Xfatal-warnings" />
+      </parameters>
+      <plugins>
+        <plugin path="$USER_HOME$/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/typelevel/kind-projector_2.13.11/0.13.2/kind-projector_2.13.11-0.13.2.jar" />
+        <plugin path="$USER_HOME$/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/olegpy/better-monadic-for_2.13/0.3.1/better-monadic-for_2.13-0.3.1.jar" />
+      </plugins>
+    </profile>
+  </component>
+</project>

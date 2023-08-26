@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/lb.iml" filepath="$PROJECT_DIR$/.idea/lb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/loadbalancer.iml" filepath="$PROJECT_DIR$/.idea/modules/loadbalancer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/loadbalancer-build.iml" filepath="$PROJECT_DIR$/.idea/modules/loadbalancer-build.iml" />
     </modules>
   </component>
 </project>
