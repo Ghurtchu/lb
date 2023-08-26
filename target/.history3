@@ -1,0 +1,30 @@
+1692993021481:;set _root_.scala.collection.Seq(historyPath := None,shellPrompt := { _ => "" },SettingKey[_root_.scala.Option[_root_.sbt.File]]("sbtStructureOutputFile") in _root_.sbt.Global := _root_.scala.Some(_root_.sbt.file("/private/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt-structure.xml")),SettingKey[_root_.java.lang.String]("sbtStructureOptions") in _root_.sbt.Global := "download, resolveClassifiers");apply -cp "/Users/aghurtchumelia/Library/Application Support/JetBrains/IdeaIC2023.1/plugins/Scala/repo/org/jetbrains/scala/sbt-structure-extractor_2.12_1.0/2023.1.0/sbt-structure-extractor-2023.1.0.jar" org.jetbrains.sbt.CreateTasks;preferScala2;*/*:dumpStructure
+1693004117365:compile
+1693004612132:run]
+1693004765492:run
+1693005110682:;set _root_.scala.collection.Seq(historyPath := None,shellPrompt := { _ => "" },SettingKey[_root_.scala.Option[_root_.sbt.File]]("sbtStructureOutputFile") in _root_.sbt.Global := _root_.scala.Some(_root_.sbt.file("/private/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt-structure1.xml")),SettingKey[_root_.java.lang.String]("sbtStructureOptions") in _root_.sbt.Global := "download, resolveClassifiers");apply -cp "/Users/aghurtchumelia/Library/Application Support/JetBrains/IdeaIC2023.1/plugins/Scala/repo/org/jetbrains/scala/sbt-structure-extractor_2.12_1.0/2023.1.0/sbt-structure-extractor-2023.1.0.jar" org.jetbrains.sbt.CreateTasks;preferScala2;*/*:dumpStructure
+1693005300455:run
+1693039695642:compile
+1693039709267:test
+1693039711825:assembly
+1693039872785:reload
+1693039874929:compile
+1693039877917:assembly
+1693044113946:reload
+1693044116503:compile
+1693044126530:test
+1693044176351:assembly
+1693044301149:compl
+1693044302863:compile
+1693044325114:test
+1693044396944:compile
+1693044398634:test
+1693044416540:assemblt
+1693044418317:assembly
+1693044459742:reload
+1693044463017:assembly
+1693048624431:compile
+1693048643127:test
+1693048646229:assembly
+1693066749014:;set _root_.scala.collection.Seq(historyPath := None,shellPrompt := { _ => "" },SettingKey[_root_.scala.Option[_root_.sbt.File]]("sbtStructureOutputFile") in _root_.sbt.Global := _root_.scala.Some(_root_.sbt.file("/private/var/folders/zq/wb3lpkw10pn0b1drq2r4w93c0000gq/T/sbt-structure.xml")),SettingKey[_root_.java.lang.String]("sbtStructureOptions") in _root_.sbt.Global := "download, resolveClassifiers");apply -cp "/Users/aghurtchumelia/Library/Application Support/JetBrains/IdeaIC2023.1/plugins/Scala/repo/org/jetbrains/scala/sbt-structure-extractor_2.12_1.0/2023.1.0/sbt-structure-extractor-2023.1.0.jar" org.jetbrains.sbt.CreateTasks;preferScala2;*/*:dumpStructure
+1693071302728:compile

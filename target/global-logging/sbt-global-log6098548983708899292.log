@@ -1,0 +1,6 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(assembly, Some(ffffa280-96b4-42aa-9021-c82b2e77df71), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: assembly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /Users/aghurtchumelia/build-your-own-stuff/load-balancer/target/scala-2.13/lb.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 0 s, completed Aug 26, 2023, 1:23:21 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

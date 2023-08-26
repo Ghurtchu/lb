@@ -1,0 +1,21 @@
+[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mSeparate classpath projects and all dependencies end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect only external dependencies end. Took 0 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect excluded jar names end. Took 0 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mFilter jars start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mFilter jars end. Took 0 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade project classes end. Took 0 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect and shade dependency entries end. Took 9 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect renames start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect renames end. Took 39 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mProcess renames start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mProcess renames end. Took 1 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCollect all merge strategies for cache check end. Took 45 ms[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /Users/aghurtchumelia/build-your-own-stuff/load-balancer/target/scala-2.13/lb.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mClose library jar references start:[0m
+[0m[[0m[0mdebug[0m] [0m[0mClose library jar references end. Took 1 ms[0m

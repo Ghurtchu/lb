@@ -1,0 +1,10 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(assembly, Some(31f77621-67f0-4505-b14f-e8adb2219e83), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: assembly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0m7 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m53 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /Users/aghurtchumelia/build-your-own-stuff/load-balancer/target/scala-2.13/lb.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 15f4e7faa409ca70b9b71417e115a403abded87b[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 4 s, completed Aug 26, 2023, 12:07:46 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m

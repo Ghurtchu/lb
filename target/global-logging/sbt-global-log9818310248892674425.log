@@ -1,0 +1,10 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(assembly, Some(1286b6c3-037f-4f88-934b-a125c7690eb2), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: assembly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/aghurtchumelia/build-your-own-stuff/load-balancer/target/scala-2.13/classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0m7 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m53 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /Users/aghurtchumelia/build-your-own-stuff/load-balancer/target/scala-2.13/lb.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 3ab98df7a5907b62f46016b926b6f571d725cb6e[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 7 s, completed Aug 26, 2023, 1:35:31 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

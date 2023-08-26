@@ -1,0 +1,6 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(compile, Some(dad91f26-25fe-4514-8dfc-d18c4d205339), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / compile[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 5 Scala sources to /Users/aghurtchumelia/build-your-own-stuff/loadbalancer/target/scala-2.13/classes ...[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 2 s, completed Aug 26, 2023, 1:01:48 AM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

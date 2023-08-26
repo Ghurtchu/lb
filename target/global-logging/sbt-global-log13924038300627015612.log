@@ -1,0 +1,18 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run], Some(d7305fe4-8f06-4ac7-ae62-f10ac36fe558), Some(CommandSource(console0)))[0m
+[0m[[0m[31merror[0m] [0m[0mExpected ID character[0m
+[0m[[0m[31merror[0m] [0m[0mNot a valid command: run (similar: plugin, new)[0m
+[0m[[0m[31merror[0m] [0m[0mExpected project ID[0m
+[0m[[0m[31merror[0m] [0m[0mExpected configuration[0m
+[0m[[0m[31merror[0m] [0m[0mExpected ':'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected key[0m
+[0m[[0m[31merror[0m] [0m[0mExpected whitespace character[0m
+[0m[[0m[31merror[0m] [0m[0mExpected '/'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected '::'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected end of input.[0m
+[0m[[0m[31merror[0m] [0m[0mrun][0m
+[0m[[0m[31merror[0m] [0m[0m   ^[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m
+[0m[[0m[0mdebug[0m] [0m[0mjsonRpcNotify: JsonRpcNotificationMessage(2.0, shutdown, [false,null])[0m
+[0m[[0m[0mdebug[0m] [0m[0mjsonRpcNotify: JsonRpcNotificationMessage(2.0, shutdown, [false,null])[0m
+[0m[[0m[0mdebug[0m] [0m[0mjsonRpcNotify: JsonRpcNotificationMessage(2.0, shutdown, [true,null])[0m

@@ -1,0 +1,44 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/aghurtchumelia/Personal/lb/target/scala-2.13/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerServer$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Backends.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$helloRoutes$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$requestRoutes$1$$anonfun$$nestedInanonfun$applyOrElse$4$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Backends$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anon$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$requestRoutes$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerServer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerServer$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Backends.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$helloRoutes$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$requestRoutes$1$$anonfun$$nestedInanonfun$applyOrElse$4$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Backends$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anon$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$requestRoutes$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerServer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerServer$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Backends.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$helloRoutes$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$requestRoutes$1$$anonfun$$nestedInanonfun$applyOrElse$4$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Backends$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anon$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerRoutes$$anonfun$requestRoutes$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	LoadbalancerServer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /Users/aghurtchumelia/Personal/lb/target/scala-2.13/classes.bak[0m
