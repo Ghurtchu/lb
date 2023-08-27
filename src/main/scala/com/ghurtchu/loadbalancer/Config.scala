@@ -3,19 +3,19 @@ package com.ghurtchu.loadbalancer
 import scala.util.Try
 
 final case class Config(
-  rawPort: String,
-  rawHost: String,
+  port: String,
+  host: String,
   backends: Urls,
   healthChecks: Urls,
 ) {
 
-  def host: String =
-    if (rawHost.isEmpty)
+  def hostOrDefault: String =
+    if (host.isEmpty)
       "0.0.0.0"
     else
-      rawHost
+      host
 
-  def port: Int =
-    Try(rawPort.toInt).toOption
+  def portOrDefault: Int =
+    Try(port.toInt).toOption
       .getOrElse(8080)
 }

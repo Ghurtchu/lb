@@ -13,7 +13,7 @@ object Main extends IOApp {
       backendsRef     <- Ref.of[IO, Urls](config.backends)
       healthChecksRef <- Ref.of[IO, Urls](config.healthChecks)
       (host, port)    <- IO.fromOption {
-        maybeHostAndPort(config.host, config.port)
+        maybeHostAndPort(config.hostOrDefault, config.portOrDefault)
       }(new RuntimeException("Invalid port or host from configuration"))
       _               <- IO.println(s"Starting server on URL: $host:$port")
       _               <- LoadBalancerServer.run(
