@@ -10,9 +10,4 @@ final case class Backends(urls: Vector[String]) extends AnyVal {
   }
 
   def current: String = urls.head
-
-}
-
-object Backends {
-  def empty: Backends = Backends(Vector.empty)
 }

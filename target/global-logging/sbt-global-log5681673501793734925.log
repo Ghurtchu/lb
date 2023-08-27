@@ -7,3 +7,5 @@
 [0m[[0m[0minfo[0m] [0m[0mJar hash: 6a6d3c1322b677ffaa64f31e4a6fc1ab57302d7d[0m
 [0m[[0m[32msuccess[0m] [0m[0mTotal time: 4 s, completed Aug 27, 2023, 12:10:10 AM[0m
 [0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m
+[0m[[0m[0minfo[0m] [0m[0mshutting down sbt server[0m
