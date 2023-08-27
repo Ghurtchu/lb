@@ -15,15 +15,15 @@ object LoadbalancerRoutes {
     import dsl._
     HttpRoutes.of[IO] { case request @ GET -> Root =>
       for {
-        backend <- backends.getAndUpdate(_.next)
-        current = backend.current
-        uri <- IO.fromOption((Uri.fromString(current)).toOption) {
-          new RuntimeException("Could not construct proper URI")
-        }
+        backend  <- backends.getAndUpdate(_.next)
+        current   = backend.current
+        uri      <- IO.fromOption((Uri.fromString(current)).toOption) {
+                      new RuntimeException("Could not construct proper URI")
+                    }
         response <- client
-          .expect[String](request.withUri(uri))
-          .recover(_ => s"server with uri: $uri is dead")
-        resp <- Ok(response)
+                      .expect[String](request.withUri(uri))
+                      .recover(_ => s"server with uri: $uri is dead")
+        resp     <- Ok(response)
       } yield resp
     }
   }

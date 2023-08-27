@@ -9,16 +9,16 @@ object Main extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] =
     (for {
-      cfg <- IO.delay(ConfigSource.default.loadOrThrow[Config])
-      backends <- Ref.of[IO, Backends](cfg.backends)
+      cfg          <- IO.delay(ConfigSource.default.loadOrThrow[Config])
+      backends     <- Ref.of[IO, Backends](cfg.backends)
       (host, port) <- IO.fromOption(
-        maybeHostAndPort(cfg.hostStr, cfg.portInt),
-      ) {
-        new RuntimeException("Incorrect port or host")
-      }
-      _ <- IO.delay(
-        println(s"Starting server on URL: $host:$port"),
-      ) *> LoadbalancerServer.run(backends, port, host)
+                        maybeHostAndPort(cfg.hostStr, cfg.portInt),
+                      ) {
+                        new RuntimeException("Incorrect port or host")
+                      }
+      _            <- IO.delay(
+                        println(s"Starting server on URL: $host:$port"),
+                      ) *> LoadbalancerServer.run(backends, port, host)
     } yield ()).as(ExitCode.Success)
 
   private def maybeHostAndPort(

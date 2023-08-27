@@ -3,7 +3,7 @@ package com.ghurtchu.loadbalancer
 final case class Backends(urls: Vector[String]) extends AnyVal {
 
   def next: Backends = {
-    val head = urls.head
+    val head        = urls.head
     val urlsUpdated = urls.tail :+ head
 
     copy(urlsUpdated)
