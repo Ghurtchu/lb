@@ -12,14 +12,14 @@ object LoadbalancerServer {
     for {
       client <- EmberClientBuilder.default[IO].build
       httpApp = Logger.httpApp(logHeaders = true, logBody = true) {
-                  LoadbalancerRoutes.routes(backends, client).orNotFound
-                }
-      _      <- EmberServerBuilder
-                  .default[IO]
-                  .withHost(host)
-                  .withPort(port)
-                  .withHttpApp(httpApp)
-                  .build
+        LoadbalancerRoutes.routes(backends, client).orNotFound
+      }
+      _ <- EmberServerBuilder
+        .default[IO]
+        .withHost(host)
+        .withPort(port)
+        .withHttpApp(httpApp)
+        .build
     } yield ()
   }.useForever
 }

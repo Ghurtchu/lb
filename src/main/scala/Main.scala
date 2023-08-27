@@ -12,13 +12,13 @@ object Main extends IOApp {
       cfg          <- IO.delay(ConfigSource.default.loadOrThrow[Config])
       backends     <- Ref.of[IO, Backends](cfg.backends)
       (host, port) <- IO.fromOption(
-                        maybeHostAndPort(cfg.hostStr, cfg.portInt),
-                      ) {
-                        new RuntimeException("Incorrect port or host")
-                      }
+        maybeHostAndPort(cfg.hostStr, cfg.portInt),
+      ) {
+        new RuntimeException("Incorrect port or host")
+      }
       _            <- IO.delay(
-                        println(s"Starting server on URL: $host:$port"),
-                      ) *> LoadbalancerServer.run(backends, port, host)
+        println(s"Starting server on URL: $host:$port"),
+      ) *> LoadbalancerServer.run(backends, port, host)
     } yield ()).as(ExitCode.Success)
 
   private def maybeHostAndPort(
