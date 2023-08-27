@@ -1,4 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
-[0m[[0m[0mdebug[0m] [0m[0m	(/Users/aghurtchumelia/Personal/lb/src/main/resources/logback.xml,/Users/aghurtchumelia/Personal/lb/target/scala-2.13/classes/logback.xml)[0m
-[0m[[0m[0mdebug[0m] [0m[0m	(/Users/aghurtchumelia/Personal/lb/src/main/resources/application.conf,/Users/aghurtchumelia/Personal/lb/target/scala-2.13/classes/application.conf)[0m
-[0m[[0m[0mdebug[0m] [0m[0m	(/Users/aghurtchumelia/Personal/lb/src/main/resources/META-INF/native-image/com/ghurtchu/loadbalancer/reflect-config.json,/Users/aghurtchumelia/Personal/lb/target/scala-2.13/classes/META-INF/native-image/com/ghurtchu/loadbalancer/reflect-config.json)[0m

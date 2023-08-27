@@ -1,6 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(compile, Some(6e795300-89cf-42de-9dca-480d5856dae7), Some(CommandSource(console0)))[0m
-[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / compile[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[0minfo[0m] [0m[0mcompiling 4 Scala sources to /Users/aghurtchumelia/Personal/lb/target/scala-2.13/classes ...[0m
-[0m[[0m[32msuccess[0m] [0m[0mTotal time: 4 s, completed Aug 26, 2023, 7:35:07 PM[0m
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

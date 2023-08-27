@@ -1,5 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(test, Some(58493d74-fd34-4108-8592-46831921abeb), Some(CommandSource(console0)))[0m
-[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / test[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[32msuccess[0m] [0m[0mTotal time: 0 s, completed Aug 26, 2023, 12:02:06 PM[0m
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
