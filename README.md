@@ -1,11 +1,11 @@
 ### Build Your Own Application Load Balancer
 https://codingchallenges.substack.com/p/coding-challenge-5
 
-Current implementation uses round robin logic for distributing requests.
+Current implementation uses round robin algorithm for distributing requests.
 
-Also, it periodically checks the health of servers and if one of them is dead it stops sending requests to it.
+Also, it periodically checks the availabilty of backends and stops forwarding requests to the unavailable servers.
 
-As soon as dead server's back up and running it will start sending requests to it.
+As soon as dead server is back and up & running it starts forwarding requests to it.
 
 Comprehensive testing instructions:
 
@@ -26,19 +26,24 @@ Run the load balancer and observe health check logs:
 - `./lb`
 ![My Image](screenshots/lb-healthcheck-logs.png)
 
+
 Ping the load balancer and observe responses from different servers:
 - `curl localhost:8080`
 ![My Image](screenshots/lb-curl.png)
 
+
 Stop one of the backends (8081):
 ![My Image](screenshots/stop-8081.png)
+
 
 Observe the load balancer adjust distributing requests to only two servers:
 ![My Image](screenshots/lb-adjusted-1.png)
 
+
 Run the server with port 8081 again:
 - `./be 8081`
 ![My Image](screenshots/8081.png)
+
 
 Observe the load balancer adjust distributing requests to all three servers again:
 - `curl localhost:8080`
