@@ -1,6 +1,7 @@
 package com.ghurtchu.loadbalancer
 
-import cats.effect.{IO, Ref}
+import cats.effect.IO
+import com.ghurtchu.loadbalancer.Urls.{Backends, HealthChecks}
 import org.http4s.Uri
 import org.http4s.client.Client
 
@@ -8,39 +9,38 @@ import scala.concurrent.duration.DurationInt
 
 object BackendHealthChecks {
   def run(
-    backendUrls: Ref[IO, Urls],
-    backendHealthCheckUrls: Ref[IO, Urls],
+    backends: Backends,
+    healthChecks: HealthChecks,
     client: Client[IO],
   ): IO[Unit] =
     (for {
-      current <- backendHealthCheckUrls.getAndUpdate(_.next).map(_.current)
-      _       <- IO(println(s"Checking health status of $current"))
-      uri     <- IO.fromOption(
-        Uri.fromString(current).toOption,
-      ) {
-        new RuntimeException("Could not construct proper URI")
-      }
+      current <- healthChecks.ref
+        .getAndUpdate(_.next)
+        .map(_.current)
+      _       <- IO.println(s"Checking health status of $current")
+      uri     <- IO.fromEither(Uri.fromString(current))
       status  <- client
         .expect[String](uri)
-        .map(_ => ServerStatus.Alive)
-        .recover(_ => ServerStatus.Dead)
+        .as(ServerStatus.Alive)
         .timeout(5.seconds)
-      _       <- status match {
+        .handleError(_ => ServerStatus.Dead)
+      backend = current.reverse
+        .dropWhile(_ != '/')
+        .reverse
+        .init
+      _ <- status match {
         case ServerStatus.Alive =>
-          for {
-            _ <- IO(println("Server is alive"))
-            // current = localhost:8080/hello
-            backendToAdd = current.reverse.dropWhile(_ != '/').reverse.init
-            _ <- backendUrls.update(_.add(backendToAdd))
-          } yield ()
+          IO.println(s"$backend is alive") *>
+            backends.ref
+              .update(_.add(backend))
         case ServerStatus.Dead  =>
-          for {
-            _ <- IO(println("Server is dead"))
-            backendToDrop = current.reverse.dropWhile(_ != '/').reverse.init
-            _ <- IO(println(backendToDrop))
-            _ <- backendUrls.update(_.drop(backendToDrop))
-          } yield ()
+          IO.println(s"$backend is dead") *>
+            backends.ref
+              .update(_.remove(backend))
       }
-      _       <- backendHealthCheckUrls.update(_.next)
-    } yield ()).flatMap(_ => IO.sleep(2.seconds)).foreverM
+    } yield ())
+      .flatMap(_ =>
+        IO.sleep(1200.millis),
+      ) // health check each server per 1.2 seconds
+      .foreverM
 }
