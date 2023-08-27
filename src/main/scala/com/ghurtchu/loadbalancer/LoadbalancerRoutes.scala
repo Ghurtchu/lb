@@ -17,7 +17,7 @@ object LoadbalancerRoutes {
       for {
         backend <- backends.getAndUpdate(_.next)
         current = backend.current
-        uri      <- IO.fromOption((Uri.fromString(current)).toOption) {
+        uri      <- IO.fromOption(Uri.fromString(current).toOption) {
           new RuntimeException("Could not construct proper URI")
         }
         response <- client

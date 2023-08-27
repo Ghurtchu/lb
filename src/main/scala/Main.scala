@@ -7,6 +7,11 @@ import pureconfig.generic.auto._
 
 object Main extends IOApp {
 
+  val checker = IO {
+    // send req
+    5
+  }.foreverM
+
   override def run(args: List[String]): IO[ExitCode] =
     (for {
       cfg          <- IO.delay(ConfigSource.default.loadOrThrow[Config])
@@ -18,7 +23,7 @@ object Main extends IOApp {
       }
       _            <- IO.delay(
         println(s"Starting server on URL: $host:$port"),
-      ) *> LoadbalancerServer.run(backends, port, host)
+      ) *> LoadbalancerServer.run(backends, port, host, cfg.healthCheck)
     } yield ()).as(ExitCode.Success)
 
   private def maybeHostAndPort(

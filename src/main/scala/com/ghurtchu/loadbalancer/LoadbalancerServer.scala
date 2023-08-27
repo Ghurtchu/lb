@@ -8,7 +8,7 @@ import org.http4s.server.middleware.Logger
 
 object LoadbalancerServer {
 
-  def run(backends: Ref[IO, Backends], port: Port, host: Host): IO[Unit] = {
+  def run(backends: Ref[IO, Backends], port: Port, host: Host, healthCheck: String): IO[Unit] = {
     for {
       client <- EmberClientBuilder.default[IO].build
       httpApp = Logger.httpApp(logHeaders = true, logBody = true) {
@@ -20,6 +20,7 @@ object LoadbalancerServer {
         .withPort(port)
         .withHttpApp(httpApp)
         .build
+      _ <- HealthChecks.run(healthCheck, backends, client).toResource
     } yield ()
   }.useForever
 }

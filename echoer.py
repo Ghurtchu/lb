@@ -9,5 +9,9 @@ port = int(sys.argv[1])
 def hello():
     return f"hello from http://{host}:{port}"
 
+@app.route("/health")
+def health():
+    return "I am alive"
+
 if __name__ == '__main__':
     app.run(host=host, port=port, debug=True)
