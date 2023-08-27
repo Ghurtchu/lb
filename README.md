@@ -8,6 +8,10 @@ As soon as dead server's back up and running it will start sending requests to i
 
 Comprehensive testing instructions:
 
+Configure load balancer in `src/main/resources/application.conf`:
+![My Image](screenshots/config.png)
+
+
 Run a few backends on different ports:
 - `./be 8081`
 ![My Image](screenshots/8081.png)
