@@ -8,15 +8,14 @@ import org.http4s.client.Client
 object LoadbalancerRoutes {
 
   def routes(
-    backends: Ref[IO, Backends],
+    backends: Ref[IO, Urls],
     client: Client[IO],
   ): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
     HttpRoutes.of[IO] { case request @ GET -> Root =>
       for {
-        backend <- backends.getAndUpdate(_.next)
-        current = backend.current
+        current  <- backends.getAndUpdate(_.next).map(_.current)
         uri      <- IO.fromOption(Uri.fromString(current).toOption) {
           new RuntimeException("Could not construct proper URI")
         }

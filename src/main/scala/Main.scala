@@ -1,21 +1,16 @@
 import cats.effect.{ExitCode, IO, IOApp, Ref}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
-import com.ghurtchu.loadbalancer.{Backends, Config, LoadbalancerServer}
+import com.ghurtchu.loadbalancer.{Config, LoadBalancerServer, Urls}
 import pureconfig._
 import pureconfig.generic.auto._
 
 object Main extends IOApp {
-
-  val checker = IO {
-    // send req
-    5
-  }.foreverM
-
   override def run(args: List[String]): IO[ExitCode] =
     (for {
       cfg          <- IO.delay(ConfigSource.default.loadOrThrow[Config])
-      backends     <- Ref.of[IO, Backends](cfg.backends)
+      backends     <- Ref.of[IO, Urls](cfg.backends)
+      healthChecks <- Ref.of[IO, Urls](cfg.healthChecks)
       (host, port) <- IO.fromOption(
         maybeHostAndPort(cfg.hostStr, cfg.portInt),
       ) {
@@ -23,7 +18,7 @@ object Main extends IOApp {
       }
       _            <- IO.delay(
         println(s"Starting server on URL: $host:$port"),
-      ) *> LoadbalancerServer.run(backends, port, host, cfg.healthCheck)
+      ) *> LoadBalancerServer.run(backends, healthChecks, port, host)
     } yield ()).as(ExitCode.Success)
 
   private def maybeHostAndPort(

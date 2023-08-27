@@ -5,8 +5,8 @@ import scala.util.Try
 final case class Config(
   port: String,
   host: String,
-  backends: Backends,
-  healthCheck: String,
+  backends: Urls,
+  healthChecks: Urls,
 ) {
   def hostStr: String =
     if (host.isEmpty) "0.0.0.0" else host
