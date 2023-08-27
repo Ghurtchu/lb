@@ -9,14 +9,11 @@ import pureconfig.generic.auto._
 object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
     (for {
-      cfg             <- IO.delay {
-        ConfigSource.default
-          .loadOrThrow[Config]
-      }
-      backendsRef     <- Ref.of[IO, Urls](cfg.backends)
-      healthChecksRef <- Ref.of[IO, Urls](cfg.healthChecks)
+      config          <- IO.delay(ConfigSource.default.loadOrThrow[Config])
+      backendsRef     <- Ref.of[IO, Urls](config.backends)
+      healthChecksRef <- Ref.of[IO, Urls](config.healthChecks)
       (host, port)    <- IO.fromOption {
-        maybeHostAndPort(cfg.host, cfg.port)
+        maybeHostAndPort(config.host, config.port)
       }(new RuntimeException("Invalid port or host from configuration"))
       _               <- IO.println(s"Starting server on URL: $host:$port")
       _               <- LoadBalancerServer.run(
@@ -29,11 +26,11 @@ object Main extends IOApp {
       .as(ExitCode.Success)
 
   private def maybeHostAndPort(
-    hostStr: String,
-    portInt: Int,
+    host: String,
+    port: Int,
   ): Option[(Host, Port)] =
     (
-      Host.fromString(hostStr),
-      Port.fromInt(portInt),
+      Host.fromString(host),
+      Port.fromInt(port),
     ).mapN((_, _))
 }
