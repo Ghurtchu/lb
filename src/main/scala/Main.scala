@@ -21,6 +21,7 @@ object Main extends IOApp {
         HealthChecks(healthChecksRef),
         port,
         host,
+        config
       )
     } yield ())
       .as(ExitCode.Success)

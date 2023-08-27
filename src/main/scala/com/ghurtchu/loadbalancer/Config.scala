@@ -18,4 +18,10 @@ final case class Config(
   def portOrDefault: Int =
     Try(port.toInt).toOption
       .getOrElse(8080)
+
+  def backendUrlFromHealthCheckUrl(healthCheckUrl: String): String =
+    healthCheckUrl.reverse
+      .dropWhile(_ != '/')
+      .reverse
+      .init
 }
