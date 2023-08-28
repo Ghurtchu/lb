@@ -6,9 +6,9 @@ import org.http4s.{HttpRoutes, Uri}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.client.Client
 
-object LoadbalancerRoutes {
+object Routes {
 
-  def routes(
+  def from(
     backends: Backends,
     client: Client[IO],
   ): HttpRoutes[IO] = {
@@ -20,13 +20,20 @@ object LoadbalancerRoutes {
           .getAndUpdate(_.next)
           .map(_.current)
         uri      <- IO.fromOption {
-          Uri.fromString(current).toOption
-        }(new RuntimeException("Could not construct proper URI"))
+          Uri
+            .fromString(current)
+            .toOption
+        }(InvalidURI(current))
         response <- client
           .expect[String](request.withUri(uri))
           .handleError(_ => s"server with uri: $uri is dead")
         result   <- Ok(response)
       } yield result
     }
+  }
+
+  final private case class InvalidURI(uri: String) extends Throwable {
+    override def getMessage: String =
+      s"Could not construct proper URI from $uri"
   }
 }

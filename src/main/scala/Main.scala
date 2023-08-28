@@ -1,30 +1,36 @@
 import cats.effect.{ExitCode, IO, IOApp, Ref}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
-import com.ghurtchu.loadbalancer.{Config, LoadBalancerServer, Urls}
+import com.ghurtchu.loadbalancer.{Config, LoadBalancer, Urls}
 import com.ghurtchu.loadbalancer.Urls._
 import pureconfig._
 import pureconfig.generic.auto._
 
-object Main extends IOApp {
-  override def run(args: List[String]): IO[ExitCode] =
-    (for {
-      config          <- IO.delay(ConfigSource.default.loadOrThrow[Config])
-      backendsRef     <- Ref.of[IO, Urls](config.backends)
-      healthChecksRef <- Ref.of[IO, Urls](config.healthChecks)
-      (host, port)    <- IO.fromOption {
-        maybeHostAndPort(config.hostOrDefault, config.portOrDefault)
-      }(new RuntimeException("Invalid port or host from configuration"))
-      _               <- IO.println(s"Starting server on URL: $host:$port")
-      _               <- LoadBalancerServer.run(
-        Backends(backendsRef),
-        HealthChecks(healthChecksRef),
+object Main extends IOApp.Simple {
+  override def run: IO[Unit] =
+    for {
+      config       <- IO(ConfigSource.default.loadOrThrow[Config])
+      backends     <- Ref
+        .of[IO, Urls](config.backends)
+        .map(Backends)
+      healthChecks <- Ref
+        .of[IO, Urls](config.healthChecks)
+        .map(HealthChecks)
+      (host, port) <- IO.fromOption {
+        maybeHostAndPort(
+          config.hostOrDefault,
+          config.portOrDefault,
+        )
+      }(Config.InvalidConfig)
+      _            <- IO.println(s"Starting server on URL: $host:$port")
+      _            <- LoadBalancer.run(
+        backends,
+        healthChecks,
         port,
         host,
-        config
+        config,
       )
-    } yield ())
-      .as(ExitCode.Success)
+    } yield ()
 
   private def maybeHostAndPort(
     host: String,

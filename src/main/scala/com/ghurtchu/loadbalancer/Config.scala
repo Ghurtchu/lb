@@ -25,3 +25,11 @@ final case class Config(
       .reverse
       .init
 }
+
+object Config {
+
+  final case object InvalidConfig extends Throwable {
+    override def getMessage: String =
+      "Invalid port or host, please fix Config"
+  }
+}

@@ -7,14 +7,14 @@ import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
 
-object LoadBalancerServer {
+object LoadBalancer {
 
   def run(
     backends: Backends,
     healthChecks: HealthChecks,
     port: Port,
     host: Host,
-    config: Config
+    config: Config,
   ): IO[Unit] = {
     for {
       client <- EmberClientBuilder
@@ -24,8 +24,8 @@ object LoadBalancerServer {
         logHeaders = true,
         logBody = true,
       ) {
-        LoadbalancerRoutes
-          .routes(backends, client)
+        Routes
+          .from(backends, client)
           .orNotFound
       }
       _ <- EmberServerBuilder
@@ -34,8 +34,8 @@ object LoadBalancerServer {
         .withPort(port)
         .withHttpApp(httpApp)
         .build
-      _ <- BackendHealthChecks
-        .run(backends, healthChecks, client, config)
+      _ <- BackendsHealthCheck
+        .periodically(backends, healthChecks, client, config)
         .toResource
     } yield ()
   }.useForever

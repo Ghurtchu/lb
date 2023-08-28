@@ -7,8 +7,9 @@ import org.http4s.client.Client
 
 import scala.concurrent.duration.DurationInt
 
-object BackendHealthChecks {
-  def run(
+object BackendsHealthCheck {
+
+  def periodically(
     backends: Backends,
     healthChecks: HealthChecks,
     client: Client[IO],
@@ -37,8 +38,6 @@ object BackendHealthChecks {
               .update(_.remove(backend))
       }
     } yield ())
-      .flatMap(_ =>
-        IO.sleep(1200.millis),
-      ) // health check each server per 1.2 seconds
+      .flatMap(_ => IO.sleep(2500.millis))
       .foreverM
 }
