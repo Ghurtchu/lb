@@ -1,11 +1,11 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Urls.WrappedRef.Backends
+import com.ghurtchu.loadbalancer.WrappedRef.Backends
 import org.http4s.{HttpRoutes, Request}
 import org.http4s.dsl.Http4sDsl
 
-object Routes {
+object Route {
 
   def from(
     backends: Backends,

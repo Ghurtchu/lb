@@ -1,7 +1,7 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Urls.WrappedRef.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.WrappedRef.{Backends, HealthChecks}
 
 import scala.concurrent.duration.DurationInt
 

@@ -2,7 +2,7 @@ package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
 import com.comcast.ip4s._
-import com.ghurtchu.loadbalancer.Urls.WrappedRef.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.WrappedRef.{Backends, HealthChecks}
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
@@ -24,7 +24,7 @@ object LoadBalancer {
         logHeaders = true,
         logBody = true,
       ) {
-        Routes
+        Route
           .from(
             backends,
             Send.toBackend(client, _),

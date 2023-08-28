@@ -1,7 +1,5 @@
 package com.ghurtchu.loadbalancer
 
-import cats.effect.{IO, Ref}
-
 final case class Urls(urls: Vector[String]) extends AnyVal {
 
   def next: Urls =
@@ -25,13 +23,4 @@ final case class Urls(urls: Vector[String]) extends AnyVal {
 object Urls {
 
   def empty: Urls = Urls(Vector.empty)
-
-  sealed trait WrappedRef {
-    def ref: Ref[IO, Urls]
-  }
-
-  object WrappedRef {
-    final case class Backends(ref: Ref[IO, Urls])     extends WrappedRef
-    final case class HealthChecks(ref: Ref[IO, Urls]) extends WrappedRef
-  }
 }

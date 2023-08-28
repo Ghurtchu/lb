@@ -1,7 +1,6 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Urls.WrappedRef
 
 trait RoundRobin {
   def apply(wrappedRef: WrappedRef): IO[String]

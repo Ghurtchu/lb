@@ -1,6 +1,6 @@
 package com.ghurtchu.loadbalancer
 
-import com.ghurtchu.loadbalancer.Routes.InvalidUri
+import com.ghurtchu.loadbalancer.Route.InvalidUri
 import munit.FunSuite
 import org.http4s.Uri
 
