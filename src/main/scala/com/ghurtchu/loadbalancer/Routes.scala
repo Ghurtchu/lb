@@ -1,7 +1,7 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Urls.RefWrapper.Backends
+import com.ghurtchu.loadbalancer.Urls.WrappedRef.Backends
 import org.http4s.{HttpRoutes, Request}
 import org.http4s.dsl.Http4sDsl
 
@@ -25,7 +25,7 @@ object Routes {
     }
   }
 
-  final case class InvalidURI(uri: String) extends Throwable {
+  final case class InvalidUri(uri: String) extends Throwable {
     override def getMessage: String =
       s"Could not construct proper URI from $uri"
   }

@@ -19,10 +19,9 @@ object Send {
         .handleError(_ => s"server with uri: $uri is dead")
 
   def toHealthCheck(client: Client[IO]): Send[ServerStatus] =
-    uri =>
-      client
-        .expect[String](uri)
-        .as(ServerStatus.Alive)
-        .timeout(5.seconds)
-        .handleError(_ => ServerStatus.Dead)
+    client
+      .expect[String](_)
+      .as(ServerStatus.Alive)
+      .timeout(5.seconds)
+      .handleError(_ => ServerStatus.Dead)
 }

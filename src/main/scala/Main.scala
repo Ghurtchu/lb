@@ -1,7 +1,7 @@
 import cats.effect.{IO, IOApp, Ref}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
-import com.ghurtchu.loadbalancer.Urls.RefWrapper.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.Urls.WrappedRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.{Config, LoadBalancer, Urls}
 import pureconfig._
 import pureconfig.generic.auto._
@@ -11,14 +11,14 @@ object Main extends IOApp.Simple {
   override def run: IO[Unit] =
     for {
       config       <- IO(ConfigSource.default.loadOrThrow[Config])
-      backends     <- wrappedRef(config.backends, Backends)
-      healthChecks <- wrappedRef(config.healthChecks, HealthChecks)
-      (host, port) <- IO.fromOption {
-        maybeHostAndPort(
-          config.hostOrDefault,
-          config.portOrDefault,
+      backends     <- ref(config.backends, Backends)
+      healthChecks <- ref(config.healthChecks, HealthChecks)
+      (host, port) <- IO.fromEither {
+        hostAndPort(
+          config.hostOr(fallback = "0.0.0.0"),
+          config.portOr(fallback = 8080),
         )
-      }(Config.InvalidConfig)
+      }
       _            <- IO.println(s"Starting server on URL: $host:$port")
       _            <- LoadBalancer.run(
         backends,
@@ -29,7 +29,7 @@ object Main extends IOApp.Simple {
       )
     } yield ()
 
-  private def wrappedRef[A](
+  private def ref[A](
     urls: Urls,
     f: Ref[IO, Urls] => A,
   ): IO[A] =
@@ -37,12 +37,15 @@ object Main extends IOApp.Simple {
       .of[IO, Urls](urls)
       .map(f)
 
-  private def maybeHostAndPort(
+  private type HostAndPortOr[A] = Either[A, (Host, Port)]
+
+  private def hostAndPort(
     host: String,
     port: Int,
-  ): Option[(Host, Port)] =
+  ): HostAndPortOr[Config.InvalidConfig] =
     (
       Host.fromString(host),
       Port.fromInt(port),
     ).mapN((_, _))
+      .toRight(Config.InvalidConfig)
 }

@@ -1,11 +1,11 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Urls.RefWrapper.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.Urls.WrappedRef.{Backends, HealthChecks}
 
 import scala.concurrent.duration.DurationInt
 
-object BackendsHealthCheck {
+object HealthCheckBackends {
 
   def periodically(
     healthChecks: HealthChecks,
@@ -17,8 +17,9 @@ object BackendsHealthCheck {
     send: Send[ServerStatus],
   ): IO[Unit] =
     (for {
-      current <- roundRobin(healthChecks)
-      _       <- IO.println(s"Checking health status of $current")
+      current <- roundRobin(healthChecks).flatTap(healthCheckUrl =>
+        IO.println(s"Checking availability of $healthCheckUrl"),
+      )
       uri     <- IO.fromEither(parseUri(current))
       status  <- send(uri)
       _       <- updateUrls(backends, status, backendFromHealthCheck(current))

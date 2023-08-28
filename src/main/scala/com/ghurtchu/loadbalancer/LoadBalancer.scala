@@ -2,7 +2,7 @@ package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
 import com.comcast.ip4s._
-import com.ghurtchu.loadbalancer.Urls.RefWrapper.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.Urls.WrappedRef.{Backends, HealthChecks}
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
@@ -15,8 +15,8 @@ object LoadBalancer {
     port: Port,
     host: Host,
     backendFromHealthCheck: String => String,
-  ): IO[Unit] = {
-    for {
+  ): IO[Unit] =
+    (for {
       client <- EmberClientBuilder
         .default[IO]
         .build
@@ -39,7 +39,7 @@ object LoadBalancer {
         .withPort(port)
         .withHttpApp(httpApp)
         .build
-      _ <- BackendsHealthCheck
+      _ <- HealthCheckBackends
         .periodically(
           healthChecks,
           backends,
@@ -50,6 +50,5 @@ object LoadBalancer {
           Send.toHealthCheck(client),
         )
         .toResource
-    } yield ()
-  }.useForever
+    } yield ()).useForever
 }

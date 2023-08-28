@@ -9,15 +9,15 @@ final case class Config(
   healthChecks: Urls,
 ) {
 
-  def hostOrDefault: String =
+  def hostOr(fallback: String): String =
     if (host.isEmpty)
-      "0.0.0.0"
+      fallback
     else
       host
 
-  def portOrDefault: Int =
+  def portOr(fallback: Int): Int =
     Try(port.toInt).toOption
-      .getOrElse(8080)
+      .getOrElse(fallback)
 
   def backendFromHealthCheck(healthCheckUrl: String): String =
     healthCheckUrl.reverse
@@ -27,6 +27,8 @@ final case class Config(
 }
 
 object Config {
+
+  type InvalidConfig = InvalidConfig.type
 
   final case object InvalidConfig extends Throwable {
     override def getMessage: String =

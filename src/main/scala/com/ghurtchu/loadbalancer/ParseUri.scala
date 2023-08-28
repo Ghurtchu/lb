@@ -1,17 +1,17 @@
 package com.ghurtchu.loadbalancer
 
-import com.ghurtchu.loadbalancer.Routes.InvalidURI
+import com.ghurtchu.loadbalancer.Routes.InvalidUri
 import org.http4s.Uri
+import cats.syntax.either._
 
 trait ParseUri {
-  def apply(uri: String): Either[InvalidURI, Uri]
+  def apply(uri: String): Either[InvalidUri, Uri]
 }
 
 object ParseUri {
 
-  def live: ParseUri = (uri: String) =>
+  def live: ParseUri = uri =>
     Uri
       .fromString(uri)
-      .left
-      .map(_ => InvalidURI(uri))
+      .leftMap(_ => InvalidUri(uri))
 }

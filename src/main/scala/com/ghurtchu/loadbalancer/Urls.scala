@@ -22,12 +22,12 @@ final case class Urls(urls: Vector[String]) extends AnyVal {
 
 object Urls {
 
-  sealed trait RefWrapper {
+  sealed trait WrappedRef {
     def ref: Ref[IO, Urls]
   }
 
-  object RefWrapper {
-    final case class Backends(ref: Ref[IO, Urls])     extends RefWrapper
-    final case class HealthChecks(ref: Ref[IO, Urls]) extends RefWrapper
+  object WrappedRef {
+    final case class Backends(ref: Ref[IO, Urls])     extends WrappedRef
+    final case class HealthChecks(ref: Ref[IO, Urls]) extends WrappedRef
   }
 }
