@@ -14,7 +14,12 @@ final case class Urls(urls: Vector[String]) extends AnyVal {
     copy(urls.filter(_ != url))
 
   def add(url: String): Urls =
-    copy(urls :+ url)
+    copy {
+      if (urls contains url)
+        urls
+      else
+        urls :+ url
+    }
 }
 
 object Urls {
