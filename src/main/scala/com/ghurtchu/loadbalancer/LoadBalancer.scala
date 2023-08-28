@@ -45,7 +45,7 @@ object LoadBalancer {
           backends,
           ParseUri.live,
           backendFromHealthCheck,
-          UpdateUrls.live,
+          UpdateWrappedRefUrls.live,
           RoundRobin.live,
           Send.toHealthCheck(client),
         )

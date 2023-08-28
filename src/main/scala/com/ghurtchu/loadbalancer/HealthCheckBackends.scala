@@ -12,17 +12,20 @@ object HealthCheckBackends {
     backends: Backends,
     parseUri: ParseUri,
     backendFromHealthCheck: String => String,
-    updateUrls: UpdateUrls,
+    updateWrappedRefUrls: UpdateWrappedRefUrls,
     roundRobin: RoundRobin,
     send: Send[ServerStatus],
   ): IO[Unit] =
     (for {
-      current <- roundRobin(healthChecks).flatTap(healthCheckUrl =>
-        IO.println(s"Checking availability of $healthCheckUrl"),
-      )
+      current <- roundRobin(healthChecks)
+      _       <- IO.println(s"Checking availability of $current")
       uri     <- IO.fromEither(parseUri(current))
       status  <- send(uri)
-      _       <- updateUrls(backends, status, backendFromHealthCheck(current))
+      _       <- updateWrappedRefUrls(
+        backends,
+        status,
+        backendFromHealthCheck(current),
+      )
     } yield ())
       .flatMap(_ => IO.sleep(2500.millis))
       .foreverM

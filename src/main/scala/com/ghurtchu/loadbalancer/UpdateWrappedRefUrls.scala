@@ -3,7 +3,7 @@ package com.ghurtchu.loadbalancer
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.Urls.WrappedRef
 
-trait UpdateUrls {
+trait UpdateWrappedRefUrls {
   def apply(
     wrappedRef: WrappedRef,
     serverStatus: ServerStatus,
@@ -11,9 +11,9 @@ trait UpdateUrls {
   ): IO[Urls]
 }
 
-object UpdateUrls {
+object UpdateWrappedRefUrls {
 
-  def live: UpdateUrls = (wrappedRef, serverStatus, backendUrl) =>
+  def live: UpdateWrappedRefUrls = (wrappedRef, serverStatus, backendUrl) =>
     serverStatus match {
       case ServerStatus.Alive =>
         IO.println(s"$backendUrl is alive") *>
