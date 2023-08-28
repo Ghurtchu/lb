@@ -1,8 +1,8 @@
-import cats.effect.{ExitCode, IO, IOApp, Ref}
+import cats.effect.{IO, IOApp, Ref}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
+import com.ghurtchu.loadbalancer.Urls.RefWrapper.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.{Config, LoadBalancer, Urls}
-import com.ghurtchu.loadbalancer.Urls._
 import pureconfig._
 import pureconfig.generic.auto._
 

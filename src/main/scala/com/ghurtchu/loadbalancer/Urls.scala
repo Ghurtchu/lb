@@ -21,6 +21,13 @@ final case class Urls(urls: Vector[String]) extends AnyVal {
 }
 
 object Urls {
-  final case class Backends(ref: Ref[IO, Urls])     extends AnyVal
-  final case class HealthChecks(ref: Ref[IO, Urls]) extends AnyVal
+
+  sealed trait RefWrapper {
+    def ref: Ref[IO, Urls]
+  }
+
+  object RefWrapper {
+    final case class Backends(ref: Ref[IO, Urls])     extends RefWrapper
+    final case class HealthChecks(ref: Ref[IO, Urls]) extends RefWrapper
+  }
 }
