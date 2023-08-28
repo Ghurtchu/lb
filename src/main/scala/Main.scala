@@ -7,15 +7,12 @@ import pureconfig._
 import pureconfig.generic.auto._
 
 object Main extends IOApp.Simple {
+
   override def run: IO[Unit] =
     for {
       config       <- IO(ConfigSource.default.loadOrThrow[Config])
-      backends     <- Ref
-        .of[IO, Urls](config.backends)
-        .map(Backends)
-      healthChecks <- Ref
-        .of[IO, Urls](config.healthChecks)
-        .map(HealthChecks)
+      backends     <- createRef(config.backends, Backends)
+      healthChecks <- createRef(config.healthChecks, HealthChecks)
       (host, port) <- IO.fromOption {
         maybeHostAndPort(
           config.hostOrDefault,
@@ -31,6 +28,11 @@ object Main extends IOApp.Simple {
         config,
       )
     } yield ()
+
+  private def createRef[A](urls: Urls, f: Ref[IO, Urls] => A): IO[A] =
+    Ref
+      .of[IO, Urls](urls)
+      .map(f)
 
   private def maybeHostAndPort(
     host: String,

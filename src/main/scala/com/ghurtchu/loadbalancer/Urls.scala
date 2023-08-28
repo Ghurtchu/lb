@@ -3,7 +3,9 @@ package com.ghurtchu.loadbalancer
 import cats.effect.{IO, Ref}
 
 final case class Urls(urls: Vector[String]) extends AnyVal {
-  private def set: Set[String] = urls.toSet
+
+  private def set: Set[String] =
+    urls.toSet
 
   def next: Urls =
     copy(urls.tail :+ urls.head)
