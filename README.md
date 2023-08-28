@@ -1,6 +1,10 @@
 ### Build Your Own Application Load Balancer (currently adding tests)
 https://codingchallenges.substack.com/p/coding-challenge-5
 
+TODO:
+- add tests (unit, property, integration)
+- run health checks in parallel on N amount of Fibers and update Ref atomically
+
 Current implementation uses round robin algorithm for distributing requests.
 
 Also, it periodically checks the availabilty of backends and stops forwarding requests to the unavailable servers.

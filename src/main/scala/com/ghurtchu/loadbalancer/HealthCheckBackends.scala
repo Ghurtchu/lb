@@ -1,6 +1,7 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
+import cats.implicits.catsSyntaxParallelTraverse1
 import com.ghurtchu.loadbalancer.WrappedRef.{Backends, HealthChecks}
 
 import scala.concurrent.duration.DurationInt
