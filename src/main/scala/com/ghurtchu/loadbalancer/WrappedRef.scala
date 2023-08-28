@@ -7,7 +7,6 @@ sealed trait WrappedRef {
 }
 
 object WrappedRef {
-  final case class Backends(ref: Ref[IO, Urls]) extends WrappedRef
-
+  final case class Backends(ref: Ref[IO, Urls])     extends WrappedRef
   final case class HealthChecks(ref: Ref[IO, Urls]) extends WrappedRef
 }
