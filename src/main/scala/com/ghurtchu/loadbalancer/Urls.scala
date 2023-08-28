@@ -4,9 +4,6 @@ import cats.effect.{IO, Ref}
 
 final case class Urls(urls: Vector[String]) extends AnyVal {
 
-  private def set: Set[String] =
-    urls.toSet
-
   def next: Urls =
     copy(urls.tail :+ urls.head)
 
@@ -14,13 +11,15 @@ final case class Urls(urls: Vector[String]) extends AnyVal {
     urls.head
 
   def remove(url: String): Urls =
-    copy((set - url).toVector)
+    copy(urls.filter(_ != url))
 
   def add(url: String): Urls =
-    copy((set + url).toVector)
+    copy(urls :+ url)
 }
 
 object Urls {
+
+  def empty: Urls = Urls(Vector.empty)
 
   sealed trait WrappedRef {
     def ref: Ref[IO, Urls]
