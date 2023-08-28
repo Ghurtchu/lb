@@ -9,7 +9,8 @@ trait RoundRobin {
 
 object RoundRobin {
 
-  def of: RoundRobin = _.ref
-    .getAndUpdate(_.next)
-    .map(_.current)
+  def live: RoundRobin =
+    _.ref
+      .getAndUpdate(_.next)
+      .map(_.current)
 }

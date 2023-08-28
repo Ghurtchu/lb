@@ -9,7 +9,7 @@ trait ParseUri {
 
 object ParseUri {
 
-  def of: ParseUri = (uri: String) =>
+  def live: ParseUri = (uri: String) =>
     Uri
       .fromString(uri)
       .left
