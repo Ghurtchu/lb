@@ -13,7 +13,7 @@ object BackendsHealthCheck {
     backends: Backends,
     healthChecks: HealthChecks,
     client: Client[IO],
-    config: Config,
+    backendFromHealthCheck: String => String,
   ): IO[Unit] =
     (for {
       current <- healthChecks.ref
@@ -26,7 +26,7 @@ object BackendsHealthCheck {
         .as(ServerStatus.Alive)
         .timeout(5.seconds)
         .handleError(_ => ServerStatus.Dead)
-      backend = config.backendUrlFromHealthCheckUrl(current)
+      backend = backendFromHealthCheck(current)
       _ <- status match {
         case ServerStatus.Alive =>
           IO.println(s"$backend is alive") *>

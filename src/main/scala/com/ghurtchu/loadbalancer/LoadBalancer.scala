@@ -14,7 +14,7 @@ object LoadBalancer {
     healthChecks: HealthChecks,
     port: Port,
     host: Host,
-    config: Config,
+    backendFromHealthCheck: String => String,
   ): IO[Unit] = {
     for {
       client <- EmberClientBuilder
@@ -35,7 +35,7 @@ object LoadBalancer {
         .withHttpApp(httpApp)
         .build
       _ <- BackendsHealthCheck
-        .periodically(backends, healthChecks, client, config)
+        .periodically(backends, healthChecks, client, backendFromHealthCheck)
         .toResource
     } yield ()
   }.useForever

@@ -19,7 +19,7 @@ final case class Config(
     Try(port.toInt).toOption
       .getOrElse(8080)
 
-  def backendUrlFromHealthCheckUrl(healthCheckUrl: String): String =
+  def backendFromHealthCheck(healthCheckUrl: String): String =
     healthCheckUrl.reverse
       .dropWhile(_ != '/')
       .reverse

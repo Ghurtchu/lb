@@ -11,8 +11,8 @@ object Main extends IOApp.Simple {
   override def run: IO[Unit] =
     for {
       config       <- IO(ConfigSource.default.loadOrThrow[Config])
-      backends     <- createRef(config.backends, Backends)
-      healthChecks <- createRef(config.healthChecks, HealthChecks)
+      backends     <- wrappedRef(config.backends, Backends)
+      healthChecks <- wrappedRef(config.healthChecks, HealthChecks)
       (host, port) <- IO.fromOption {
         maybeHostAndPort(
           config.hostOrDefault,
@@ -25,11 +25,14 @@ object Main extends IOApp.Simple {
         healthChecks,
         port,
         host,
-        config,
+        config.backendFromHealthCheck,
       )
     } yield ()
 
-  private def createRef[A](urls: Urls, f: Ref[IO, Urls] => A): IO[A] =
+  private def wrappedRef[A](
+    urls: Urls,
+    f: Ref[IO, Urls] => A,
+  ): IO[A] =
     Ref
       .of[IO, Urls](urls)
       .map(f)
