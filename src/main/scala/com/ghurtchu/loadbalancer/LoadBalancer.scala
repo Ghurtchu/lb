@@ -25,7 +25,7 @@ object LoadBalancer {
         logBody = true,
       ) {
         Routes
-          .from(backends, ForwardRequest.of(client), ParseUri.of, RoundRobin.of)
+          .from(backends, Send.toBackend(client, _), ParseUri.of, RoundRobin.of)
           .orNotFound
       }
       _ <- EmberServerBuilder
@@ -37,11 +37,11 @@ object LoadBalancer {
       _ <- BackendsHealthCheck
         .periodically(
           healthChecks,
-          client,
           ParseUri.of,
           backendFromHealthCheck,
           UpdateBackends.of(backends),
           RoundRobin.of,
+          Send.toHealthCheck(client),
         )
         .toResource
     } yield ()

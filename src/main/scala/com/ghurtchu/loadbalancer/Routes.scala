@@ -2,14 +2,14 @@ package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.Urls.RefWrapper.Backends
-import org.http4s.HttpRoutes
+import org.http4s.{HttpRoutes, Request}
 import org.http4s.dsl.Http4sDsl
 
 object Routes {
 
   def from(
     backends: Backends,
-    forwardRequestToBackend: ForwardRequest,
+    send: Request[IO] => Send[String],
     parseUri: ParseUri,
     roundRobin: RoundRobin,
   ): HttpRoutes[IO] = {
@@ -19,7 +19,7 @@ object Routes {
       for {
         current  <- roundRobin(backends)
         uri      <- IO.fromEither(parseUri(current))
-        response <- forwardRequestToBackend(uri, request)
+        response <- send(request)(uri)
         result   <- Ok(response)
       } yield result
     }
