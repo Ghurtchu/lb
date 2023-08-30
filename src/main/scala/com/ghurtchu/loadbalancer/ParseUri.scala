@@ -1,6 +1,6 @@
 package com.ghurtchu.loadbalancer
 
-import com.ghurtchu.loadbalancer.Route.InvalidUri
+import com.ghurtchu.loadbalancer.LoadBalancer.InvalidUri
 import org.http4s.Uri
 import cats.syntax.either._
 
@@ -10,7 +10,7 @@ trait ParseUri {
 
 object ParseUri {
 
-  def live: ParseUri = uri =>
+  def impl: ParseUri = (uri: String) =>
     Uri
       .fromString(uri)
       .leftMap(_ => InvalidUri(uri))

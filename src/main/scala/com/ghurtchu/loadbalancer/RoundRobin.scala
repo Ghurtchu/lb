@@ -1,15 +1,15 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
+import com.ghurtchu.loadbalancer.Urls.BackendUrl
 
 trait RoundRobin {
-  def apply(wrappedRef: WrappedRef): IO[String]
+  def apply(urlsRef: UrlsRef): IO[BackendUrl]
 }
 
 object RoundRobin {
 
-  def live: RoundRobin =
-    _.ref
-      .getAndUpdate(_.next)
-      .map(_.current)
+  def impl: RoundRobin = _.urls
+    .getAndUpdate(_.next)
+    .map(_.current)
 }

@@ -8,7 +8,6 @@ class ConfigTest extends FunSuite {
     "8081",
     "localhost",
     Urls.empty,
-    Urls.empty,
   )
 
   test("hostOr") {
@@ -31,22 +30,5 @@ class ConfigTest extends FunSuite {
     val obtainedDefault     = configWithEmptyPort.portOr(8080)
     val expectedDefault     = 8080
     assertEquals(obtainedDefault, expectedDefault)
-  }
-
-  test("backendFromHealthCheck") {
-    val backendUris    =
-      (8081 to 8083)
-        .map(n => s"localhost:$n")
-        .toVector
-    val healthChecks   = Urls(backendUris.map(_ concat "/health"))
-    val configWithUrls = config.copy(
-      backends = Urls(backendUris),
-      healthChecks = healthChecks,
-    )
-    val obtained       =
-      configWithUrls.backendFromHealthCheck("localhost:8081/health")
-    val expected       = "localhost:8081"
-
-    assertEquals(obtained, expected)
   }
 }

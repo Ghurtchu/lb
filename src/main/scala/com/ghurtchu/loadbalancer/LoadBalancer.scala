@@ -1,54 +1,32 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.comcast.ip4s._
-import com.ghurtchu.loadbalancer.WrappedRef.{Backends, HealthChecks}
-import org.http4s.ember.client.EmberClientBuilder
-import org.http4s.ember.server.EmberServerBuilder
-import org.http4s.server.middleware.Logger
+import com.ghurtchu.loadbalancer.UrlsRef.Backends
+import org.http4s.{HttpRoutes, Request}
+import org.http4s.dsl.Http4sDsl
 
 object LoadBalancer {
 
-  def run(
+  def from(
     backends: Backends,
-    healthChecks: HealthChecks,
-    port: Port,
-    host: Host,
-    backendFromHealthCheck: String => String,
-  ): IO[Unit] =
-    (for {
-      client <- EmberClientBuilder
-        .default[IO]
-        .build
-      httpApp = Logger.httpApp(
-        logHeaders = true,
-        logBody = true,
-      ) {
-        Route
-          .from(
-            backends,
-            Send.toBackend(client, _),
-            ParseUri.live,
-            RoundRobin.live,
-          )
-          .orNotFound
-      }
-      _ <- EmberServerBuilder
-        .default[IO]
-        .withHost(host)
-        .withPort(port)
-        .withHttpApp(httpApp)
-        .build
-      _ <- HealthCheckBackends
-        .periodically(
-          healthChecks,
-          backends,
-          ParseUri.live,
-          backendFromHealthCheck,
-          UpdateWrappedRefUrls.live,
-          RoundRobin.live,
-          Send.toHealthCheck(client),
-        )
-        .toResource
-    } yield ()).useForever
+    send: Request[IO] => SendAndExpect[String],
+    parseUri: ParseUri,
+    roundRobin: RoundRobin,
+  ): HttpRoutes[IO] = {
+    val dsl = new Http4sDsl[IO] {}
+    import dsl._
+    HttpRoutes.of[IO] { case request @ GET -> Root =>
+      for {
+        current  <- roundRobin(backends)
+        uri      <- IO.fromEither(parseUri(current.value))
+        response <- send(request)(uri)
+        result   <- Ok(response)
+      } yield result
+    }
+  }
+
+  final case class InvalidUri(uri: String) extends Throwable {
+    override def getMessage: String =
+      s"Could not construct proper URI from $uri"
+  }
 }

@@ -2,28 +2,13 @@ package com.ghurtchu.loadbalancer
 
 import scala.util.Try
 
-final case class Config(
-  port: String,
-  host: String,
-  backends: Urls,
-  healthChecks: Urls,
-) {
+final case class Config(port: String, host: String, backends: Urls) {
 
   def hostOr(fallback: String): String =
-    if (host.isEmpty)
-      fallback
-    else
-      host
+    if (host.isEmpty) fallback else host
 
   def portOr(fallback: Int): Int =
-    Try(port.toInt).toOption
-      .getOrElse(fallback)
-
-  def backendFromHealthCheck(healthCheckUrl: String): String =
-    healthCheckUrl.reverse
-      .dropWhile(_ != '/')
-      .reverse
-      .init
+    Try(port.toInt).toOption.getOrElse(fallback)
 }
 
 object Config {

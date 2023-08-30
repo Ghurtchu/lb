@@ -1,8 +1,8 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import cats.implicits.catsSyntaxParallelTraverse1
-import com.ghurtchu.loadbalancer.WrappedRef.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.Server.ServerStatus
+import com.ghurtchu.loadbalancer.UrlsRef.{Backends, HealthChecks}
 
 import scala.concurrent.duration.DurationInt
 
@@ -12,21 +12,15 @@ object HealthCheckBackends {
     healthChecks: HealthChecks,
     backends: Backends,
     parseUri: ParseUri,
-    backendFromHealthCheck: String => String,
-    updateWrappedRefUrls: UpdateWrappedRefUrls,
+    updateRefUrls: UpdateRefUrlsAndGet,
     roundRobin: RoundRobin,
-    send: Send[ServerStatus],
+    sendAndExpectServerStatus: SendAndExpect[ServerStatus],
   ): IO[Unit] =
     (for {
       current <- roundRobin(healthChecks)
-      _       <- IO.println(s"Checking availability of $current")
-      uri     <- IO.fromEither(parseUri(current))
-      status  <- send(uri)
-      _       <- updateWrappedRefUrls(
-        backends,
-        status,
-        backendFromHealthCheck(current),
-      )
+      uri     <- IO.fromEither(parseUri(current.value))
+      status  <- sendAndExpectServerStatus(uri)
+      _       <- updateRefUrls(backends, current, status)
     } yield ())
       .flatMap(_ => IO.sleep(2500.millis))
       .foreverM

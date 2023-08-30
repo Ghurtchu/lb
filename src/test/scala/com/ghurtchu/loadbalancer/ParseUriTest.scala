@@ -1,12 +1,12 @@
 package com.ghurtchu.loadbalancer
 
-import com.ghurtchu.loadbalancer.Route.InvalidUri
+import com.ghurtchu.loadbalancer.LoadBalancer.InvalidUri
 import munit.FunSuite
 import org.http4s.Uri
 
 class ParseUriTest extends FunSuite {
 
-  val parser = ParseUri.live
+  val parser = ParseUri.impl
 
   test("valid URI") {
     val uriStr   = "0.0.0.0/8080"

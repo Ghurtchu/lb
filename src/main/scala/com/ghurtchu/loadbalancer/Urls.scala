@@ -1,26 +1,23 @@
 package com.ghurtchu.loadbalancer
 
-final case class Urls(urls: Vector[String]) extends AnyVal {
+import com.ghurtchu.loadbalancer.Urls.BackendUrl
 
-  def next: Urls =
-    copy(urls.tail :+ urls.head)
+final case class Urls(urls: Vector[BackendUrl]) extends AnyVal {
 
-  def current: String =
-    urls.head
+  def next: Urls = copy(urls.tail :+ urls.head)
 
-  def remove(url: String): Urls =
-    copy(urls.filter(_ != url))
+  def current: BackendUrl = urls.head
 
-  def add(url: String): Urls =
-    copy {
-      if (urls contains url)
-        urls
-      else
-        urls :+ url
-    }
+  def remove(url: BackendUrl): Urls = copy(urls.filter(_ != url))
+
+  def add(url: BackendUrl): Urls = copy(if (urls contains url) urls else urls :+ url)
 }
 
 object Urls {
+
+  final case class BackendUrl(value: String) extends AnyVal
+
+  implicit def stringToBackendUrl: String => BackendUrl = BackendUrl
 
   def empty: Urls = Urls(Vector.empty)
 }

@@ -1,12 +1,13 @@
 package com.ghurtchu.loadbalancer
 
 import munit.FunSuite
+import Urls._
 
 class UrlsTest extends FunSuite {
 
   private def sequentialUrls(from: Int, to: Int): Urls = Urls {
     (from to to)
-      .map(i => s"url$i")
+      .map(i => BackendUrl(s"url$i"))
       .toVector
   }
 
@@ -20,7 +21,7 @@ class UrlsTest extends FunSuite {
 
   test("current [success]") {
     val urls     = sequentialUrls(1, 5)
-    val obtained = urls.current
+    val obtained = urls.current.value
     val expected = "url1"
 
     assertEquals(obtained, expected)
