@@ -7,13 +7,13 @@ import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
 
-object Server {
+object HttpServer {
 
-  sealed trait ServerStatus
+  sealed trait Status
 
-  object ServerStatus {
-    case object Alive extends ServerStatus
-    case object Dead  extends ServerStatus
+  object Status {
+    case object Alive extends Status
+    case object Dead  extends Status
   }
 
   def start(

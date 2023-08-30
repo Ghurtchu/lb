@@ -10,7 +10,7 @@ final case class Urls(urls: Vector[BackendUrl]) extends AnyVal {
 
   def remove(url: BackendUrl): Urls = copy(urls.filter(_ != url))
 
-  def add(url: BackendUrl): Urls = copy(if (urls contains url) urls else urls :+ url)
+  def add(url: BackendUrl): Urls = if (urls contains url) this else copy(urls :+ url)
 }
 
 object Urls {

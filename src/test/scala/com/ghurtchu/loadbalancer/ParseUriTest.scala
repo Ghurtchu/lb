@@ -6,7 +6,7 @@ import org.http4s.Uri
 
 class ParseUriTest extends FunSuite {
 
-  val parser = ParseUri.impl
+  val parser = ParseUri.of
 
   test("valid URI") {
     val uriStr   = "0.0.0.0/8080"

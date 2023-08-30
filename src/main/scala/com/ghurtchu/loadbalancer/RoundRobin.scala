@@ -9,7 +9,7 @@ trait RoundRobin {
 
 object RoundRobin {
 
-  def impl: RoundRobin = _.urls
+  def of: RoundRobin = _.urls
     .getAndUpdate(_.next)
     .map(_.current)
 }

@@ -5,7 +5,7 @@ import Urls._
 
 class UrlsTest extends FunSuite {
 
-  private def sequentialUrls(from: Int, to: Int): Urls = Urls {
+  private def sequentialUrls(from: Int, to: Int): BackendUrl = Urls {
     (from to to)
       .map(i => BackendUrl(s"url$i"))
       .toVector
@@ -14,7 +14,7 @@ class UrlsTest extends FunSuite {
   test("next [success]") {
     val urls     = sequentialUrls(1, 5)
     val obtained = urls.next
-    val expected = Urls(sequentialUrls(2, 5).urls :+ "url1")
+    val expected = BackendUrl(sequentialUrls(2, 5).urls :+ "url1")
 
     assertEquals(obtained, expected)
   }
@@ -29,7 +29,7 @@ class UrlsTest extends FunSuite {
 
   test("current [failure]") {
     intercept[NoSuchElementException] {
-      Urls.empty.current
+      BackendUrl.empty.current
     }
   }
 
@@ -44,7 +44,7 @@ class UrlsTest extends FunSuite {
   test("add") {
     val urls     = sequentialUrls(2, 5)
     val obtained = urls.add("url1")
-    val expected = Urls(urls.urls :+ "url1")
+    val expected = BackendUrl(urls.urls :+ "url1")
 
     assertEquals(obtained, expected)
   }

@@ -10,7 +10,7 @@ trait ParseUri {
 
 object ParseUri {
 
-  def impl: ParseUri = (uri: String) =>
+  def of: ParseUri = (uri: String) =>
     Uri
       .fromString(uri)
       .leftMap(_ => InvalidUri(uri))

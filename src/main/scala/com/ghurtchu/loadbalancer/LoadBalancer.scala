@@ -15,11 +15,11 @@ object LoadBalancer {
   ): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
-    HttpRoutes.of[IO] { case request @ GET -> Root =>
+    HttpRoutes.of[IO] { case req @ GET -> Root =>
       for {
         current  <- roundRobin(backends)
         uri      <- IO.fromEither(parseUri(current.value))
-        response <- send(request)(uri)
+        response <- send(req)(uri)
         result   <- Ok(response)
       } yield result
     }

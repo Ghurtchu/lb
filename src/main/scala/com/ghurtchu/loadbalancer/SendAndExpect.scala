@@ -1,7 +1,7 @@
 package com.ghurtchu.loadbalancer
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Server.ServerStatus
+import com.ghurtchu.loadbalancer.HttpServer.Status
 import org.http4s.{Request, Uri}
 import org.http4s.client.Client
 
@@ -19,10 +19,10 @@ object SendAndExpect {
         .expect[String](request.withUri(uri))
         .handleError(_ => s"server with uri: $uri is dead")
 
-  def toHealthCheck(client: Client[IO]): SendAndExpect[ServerStatus] =
+  def toHealthCheck(client: Client[IO]): SendAndExpect[Status] =
     client
       .expect[String](_)
-      .as(ServerStatus.Alive)
+      .as(Status.Alive)
       .timeout(5.seconds)
-      .handleError(_ => ServerStatus.Dead)
+      .handleError(_ => Status.Dead)
 }

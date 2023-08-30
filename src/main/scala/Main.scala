@@ -2,7 +2,7 @@ import cats.effect.{IO, IOApp}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
 import com.ghurtchu.loadbalancer.UrlsRef.{Backends, HealthChecks}
-import com.ghurtchu.loadbalancer.{Config, Server, ParseUri, RoundRobin, UpdateRefUrlsAndGet}
+import com.ghurtchu.loadbalancer.{Config, HttpServer, ParseUri, RoundRobin, UpdateRefUrlsAndGet}
 import pureconfig._
 import pureconfig.generic.auto._
 
@@ -13,21 +13,22 @@ object Main extends IOApp.Simple {
       config       <- IO(ConfigSource.default.loadOrThrow[Config])
       backends     <- IO.ref(config.backends).map(Backends)
       healthChecks <- IO.ref(config.backends).map(HealthChecks)
-      (host, port) <- IO.fromEither {
-        hostAndPort(
-          config.hostOr(fallback = "0.0.0.0"),
-          config.portOr(fallback = 8080),
-        )
-      }
+      (host, port) <- IO
+        .fromEither {
+          hostAndPort(
+            config.hostOr(fallback = "0.0.0.0"),
+            config.portOr(fallback = 8080),
+          )
+        }
       _            <- IO.println(s"Starting server on URL: $host:$port")
-      _            <- Server.start(
+      _            <- HttpServer.start(
         backends,
         healthChecks,
         port,
         host,
-        ParseUri.impl,
-        UpdateRefUrlsAndGet.impl,
-        RoundRobin.impl,
+        ParseUri.of,
+        UpdateRefUrlsAndGet.of,
+        RoundRobin.of,
       )
     } yield ()
 
