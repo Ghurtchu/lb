@@ -13,13 +13,12 @@ object Main extends IOApp.Simple {
       config       <- IO(ConfigSource.default.loadOrThrow[Config])
       backends     <- IO.ref(config.backends).map(Backends)
       healthChecks <- IO.ref(config.backends).map(HealthChecks)
-      (host, port) <- IO
-        .fromEither {
-          hostAndPort(
-            config.hostOr(fallback = "0.0.0.0"),
-            config.portOr(fallback = 8080),
-          )
-        }
+      (host, port) <- IO.fromEither {
+        hostAndPort(
+          config.hostOr(fallback = "0.0.0.0"),
+          config.portOr(fallback = 8080),
+        )
+      }
       _            <- IO.println(s"Starting server on URL: $host:$port")
       _            <- HttpServer.start(
         backends,

@@ -10,15 +10,17 @@ trait UpdateRefUrlsAndGet {
 
 object UpdateRefUrlsAndGet {
 
-  def of: UpdateRefUrlsAndGet = (ref, url, status) =>
-    status match {
-      case Status.Alive =>
-        IO.println(s"$url is alive") *>
-          ref.urls
-            .updateAndGet(_.add(url))
-      case Status.Dead  =>
-        IO.println(s"$url is dead") *>
-          ref.urls
-            .updateAndGet(_.remove(url))
-    }
+  def of: UpdateRefUrlsAndGet = new UpdateRefUrlsAndGet {
+    override def apply(ref: UrlsRef, url: BackendUrl, status: Status): IO[Urls] =
+      status match {
+        case Status.Alive =>
+          IO.println(s"$url is alive") *>
+            ref.urls
+              .updateAndGet(_.add(url))
+        case Status.Dead  =>
+          IO.println(s"$url is dead") *>
+            ref.urls
+              .updateAndGet(_.remove(url))
+      }
+  }
 }
