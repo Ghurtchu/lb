@@ -3,7 +3,7 @@ https://codingchallenges.substack.com/p/coding-challenge-5
 
 TODO:
 - add tests (unit, integration)
-- run health checks in parallel on N amount of `Fibers` and update `cats.effect.Ref` atomically
+- review possible PR by contributors (if someone wants to improve something)
 
 Current implementation uses round robin algorithm for distributing requests.
 
