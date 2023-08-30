@@ -1,10 +1,6 @@
 ### Build Your Own Application Load Balancer (currently adding tests)
 https://codingchallenges.substack.com/p/coding-challenge-5
 
-TODO:
-- add tests (unit, integration)
-- review possible PR by contributors (if someone wants to improve something)
-
 Current implementation uses round robin algorithm for distributing requests.
 
 Also, it periodically checks the availabilty of backends and stops forwarding requests to the unavailable servers.
