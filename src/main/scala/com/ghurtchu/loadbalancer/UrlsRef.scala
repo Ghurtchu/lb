@@ -2,7 +2,7 @@ package com.ghurtchu.loadbalancer
 
 import cats.effect.{IO, Ref}
 
-sealed trait UrlsRef {
+trait UrlsRef {
   def urls: Ref[IO, Urls]
 }
 
