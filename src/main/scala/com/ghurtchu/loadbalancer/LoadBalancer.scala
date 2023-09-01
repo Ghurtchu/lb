@@ -11,16 +11,20 @@ object LoadBalancer {
     backends: Backends,
     send: Request[IO] => SendAndExpect[String],
     parseUri: ParseUri,
-    roundRobin: RoundRobin,
+    roundRobin: RoundRobin[Option],
   ): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
     HttpRoutes.of[IO] { case req @ GET -> Root =>
       for {
-        current  <- roundRobin(backends)
-        uri      <- IO.fromEither(parseUri(current.value))
-        response <- send(req)(uri)
-        result   <- Ok(response)
+        current <- roundRobin(backends)
+        result  <- current.fold(Ok("All backends are inactive")) { backend =>
+          for {
+            uri      <- IO.fromEither(parseUri(backend.value))
+            response <- send(req)(uri)
+            result   <- Ok(response)
+          } yield result
+        }
       } yield result
     }
   }

@@ -21,7 +21,7 @@ class UrlsTest extends FunSuite {
 
   test("current [success]") {
     val urls     = sequentialUrls(1, 5)
-    val obtained = urls.current.value
+    val obtained = urls.currentUnsafe.value
     val expected = "url1"
 
     assertEquals(obtained, expected)
@@ -29,7 +29,7 @@ class UrlsTest extends FunSuite {
 
   test("current [failure]") {
     intercept[NoSuchElementException] {
-      Urls.empty.current
+      Urls.empty.currentUnsafe
     }
   }
 

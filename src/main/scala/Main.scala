@@ -26,7 +26,8 @@ object Main extends IOApp.Simple {
         host,
         ParseUri.of,
         UpdateRefUrlsAndGet.of,
-        RoundRobin.of,
+        RoundRobin.forBackends,
+        RoundRobin.forHealthChecks,
       )
     } yield ()
 

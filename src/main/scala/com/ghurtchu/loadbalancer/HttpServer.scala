@@ -1,5 +1,6 @@
 package com.ghurtchu.loadbalancer
 
+import cats.Id
 import cats.effect.IO
 import com.comcast.ip4s._
 import com.ghurtchu.loadbalancer.UrlsRef.{Backends, HealthChecks}
@@ -23,7 +24,8 @@ object HttpServer {
     host: Host,
     parseUri: ParseUri,
     updateAndGet: UpdateRefUrlsAndGet,
-    roundRobin: RoundRobin,
+    backendsRoundRobin: RoundRobin[Option],
+    healthChecksRoundRobin: RoundRobin[Id],
   ): IO[Unit] =
     (for {
       client <- EmberClientBuilder
@@ -36,7 +38,7 @@ object HttpServer {
               backends,
               SendAndExpect.toBackend(client, _),
               parseUri,
-              roundRobin,
+              backendsRoundRobin,
             )
             .orNotFound
         }
@@ -52,7 +54,7 @@ object HttpServer {
           backends,
           parseUri,
           updateAndGet,
-          roundRobin,
+          healthChecksRoundRobin,
           SendAndExpect.toHealthCheck(client),
         )
         .toResource

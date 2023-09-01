@@ -7,7 +7,7 @@ import org.http4s.client.Client
 
 import scala.concurrent.duration.DurationInt
 
-trait SendAndExpect[+A] {
+trait SendAndExpect[A] {
   def apply(uri: Uri): IO[A]
 }
 

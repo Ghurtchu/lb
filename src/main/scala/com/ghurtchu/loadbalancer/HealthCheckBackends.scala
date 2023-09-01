@@ -1,5 +1,6 @@
 package com.ghurtchu.loadbalancer
 
+import cats.Id
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.HttpServer.Status
 import com.ghurtchu.loadbalancer.UrlsRef.{Backends, HealthChecks}
@@ -13,7 +14,7 @@ object HealthCheckBackends {
     backends: Backends,
     parseUri: ParseUri,
     updateRef: UpdateRefUrlsAndGet,
-    roundRobin: RoundRobin,
+    roundRobin: RoundRobin[Id],
     sendAndExpectServerStatus: SendAndExpect[Status],
   ): IO[Unit] =
     (for {
