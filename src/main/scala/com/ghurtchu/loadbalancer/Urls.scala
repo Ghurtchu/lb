@@ -21,7 +21,9 @@ final case class Urls(urls: Vector[Url]) extends AnyVal {
 
 object Urls {
 
-  final case class Url(value: String) extends AnyVal
+  final case class Url(value: String) extends AnyVal {
+    override def toString: String = value
+  }
 
   implicit def stringToBackendUrl: String => Url = Url
 
