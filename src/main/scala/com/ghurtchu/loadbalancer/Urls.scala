@@ -7,8 +7,7 @@ import scala.util.Try
 final case class Urls(urls: Vector[Url]) extends AnyVal {
 
   def next: Urls =
-    if (urls.length <= 1) copy(Vector(urls.head))
-    else copy(urls.tail :+ urls.head)
+    copy(Try(urls.tail :+ urls.head).getOrElse(Vector.empty))
 
   def currentOpt: Option[Url] = Try(currentUnsafe).toOption
 

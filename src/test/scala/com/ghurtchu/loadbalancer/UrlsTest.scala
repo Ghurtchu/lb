@@ -19,6 +19,15 @@ class UrlsTest extends FunSuite {
     assertEquals(obtained, expected)
   }
 
+  test("next [1 value]") {
+    val urls = Urls(Vector("url1"))
+    val obtained = urls.next
+    println(obtained)
+    val expected = urls
+
+    assertEquals(obtained, expected)
+  }
+
   test("current [success]") {
     val urls     = sequentialUrls(1, 5)
     val obtained = urls.currentUnsafe.value

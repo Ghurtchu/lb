@@ -22,13 +22,10 @@ object SendAndExpect {
 
   def toHealthCheck(client: Client[IO]): SendAndExpect[Status] = new SendAndExpect[Status] {
     override def apply(uri: Uri): IO[Status] =
-      for {
-        _      <- IO.sleep(5.seconds)
-        status <- client
-          .expect[String](uri)
-          .as(Status.Alive)
-          .timeout(5.seconds)
-          .handleError(_ => Status.Dead)
-      } yield status
+      client
+        .expect[String](uri)
+        .as(Status.Alive)
+        .timeout(5.seconds)
+        .handleError(_ => Status.Dead)
   }
 }
