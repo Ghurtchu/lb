@@ -7,7 +7,7 @@ import org.http4s.client.Client
 
 import scala.concurrent.duration.DurationInt
 
-trait SendAndExpect[A] {
+trait SendAndExpect[+A] {
   def apply(uri: Uri): IO[A]
 }
 
@@ -22,10 +22,13 @@ object SendAndExpect {
 
   def toHealthCheck(client: Client[IO]): SendAndExpect[Status] = new SendAndExpect[Status] {
     override def apply(uri: Uri): IO[Status] =
-      client
-        .expect[String](uri)
-        .as(Status.Alive)
-        .timeout(5.seconds)
-        .handleError(_ => Status.Dead)
+      for {
+        _      <- IO.sleep(5.seconds)
+        status <- client
+          .expect[String](uri)
+          .as(Status.Alive)
+          .timeout(5.seconds)
+          .handleError(_ => Status.Dead)
+      } yield status
   }
 }
