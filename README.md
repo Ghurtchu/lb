@@ -1,5 +1,4 @@
-### Build Your Own Application Load Balancer
-https://codingchallenges.substack.com/p/coding-challenge-5
+### Build Your Own Application Load Balancer - https://codingchallenges.substack.com/p/coding-challenge-5
 
 Demo video tutorial for testing: https://www.youtube.com/watch?v=SkQ6s_nwCgY
 
