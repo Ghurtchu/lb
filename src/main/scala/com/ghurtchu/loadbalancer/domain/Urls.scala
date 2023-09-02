@@ -1,6 +1,6 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.domain
 
-import com.ghurtchu.loadbalancer.Urls.Url
+import com.ghurtchu.loadbalancer.domain.Urls.Url
 
 import scala.util.Try
 

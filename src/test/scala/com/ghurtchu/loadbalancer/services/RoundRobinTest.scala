@@ -1,9 +1,10 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
-import UrlsRef._
-import Urls.Url
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
+import com.ghurtchu.loadbalancer.domain.Urls
+import com.ghurtchu.loadbalancer.domain.Urls.Url
+import com.ghurtchu.loadbalancer.domain.UrlsRef._
 import munit.FunSuite
 
 class RoundRobinTest extends FunSuite {

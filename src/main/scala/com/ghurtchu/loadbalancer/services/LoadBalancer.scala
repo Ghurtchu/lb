@@ -1,9 +1,9 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.UrlsRef.Backends
-import org.http4s.{HttpRoutes, Request}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.Backends
 import org.http4s.dsl.Http4sDsl
+import org.http4s.{HttpRoutes, Request}
 
 object LoadBalancer {
 

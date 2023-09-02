@@ -1,8 +1,9 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
 import cats.Id
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.Urls.Url
+import com.ghurtchu.loadbalancer.domain.Urls.Url
+import com.ghurtchu.loadbalancer.domain.UrlsRef
 
 trait RoundRobin[F[_]] {
   def apply(ref: UrlsRef): IO[F[Url]]

@@ -1,8 +1,10 @@
 import cats.effect.{IO, IOApp, Ref}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
-import com.ghurtchu.loadbalancer.UrlsRef.{Backends, HealthChecks}
-import com.ghurtchu.loadbalancer.{Config, HttpServer, ParseUri, RoundRobin, UpdateRefUrlsAndGet, Urls}
+import com.ghurtchu.loadbalancer.domain.{Config, Urls}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.http.HttpServer
+import com.ghurtchu.loadbalancer.services.{ParseUri, RoundRobin, UpdateRefUrlsAndGet}
 import pureconfig._
 import pureconfig.generic.auto._
 
@@ -24,6 +26,7 @@ object Main extends IOApp.Simple {
         healthChecks,
         port,
         host,
+        config.healthCheckInterval,
         ParseUri.of,
         UpdateRefUrlsAndGet.of,
         RoundRobin.forBackends,

@@ -1,8 +1,8 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.domain
 
 import scala.util.Try
 
-final case class Config(port: String, host: String, backends: Urls) {
+final case class Config(port: String, host: String, backends: Urls, healthCheckInterval: Long) {
 
   def hostOr(fallback: String): String =
     if (host.isEmpty) fallback else host

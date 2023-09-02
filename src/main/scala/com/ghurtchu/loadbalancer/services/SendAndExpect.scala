@@ -1,7 +1,8 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.HttpServer.Status
+import com.ghurtchu.loadbalancer.http.HttpClient
+import com.ghurtchu.loadbalancer.http.HttpServer.Status
 import org.http4s.{Request, Uri}
 
 import scala.concurrent.duration.DurationInt

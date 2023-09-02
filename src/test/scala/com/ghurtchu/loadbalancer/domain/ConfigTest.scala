@@ -1,4 +1,4 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.domain
 
 import munit.FunSuite
 
@@ -8,6 +8,7 @@ class ConfigTest extends FunSuite {
     port = "8081",
     host = "localhost",
     backends = Urls.empty,
+    healthCheckInterval = 1,
   )
 
   test("hostOr") {

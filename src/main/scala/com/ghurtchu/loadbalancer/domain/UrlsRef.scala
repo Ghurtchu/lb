@@ -1,4 +1,4 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.domain
 
 import cats.effect.{IO, Ref}
 

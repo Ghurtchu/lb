@@ -1,8 +1,9 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.HttpServer.Status
-import com.ghurtchu.loadbalancer.Urls.Url
+import com.ghurtchu.loadbalancer.domain.Urls.Url
+import com.ghurtchu.loadbalancer.domain.{Urls, UrlsRef}
+import com.ghurtchu.loadbalancer.http.HttpServer.Status
 
 trait UpdateRefUrlsAndGet {
   def apply(ref: UrlsRef, url: Url, status: Status): IO[Urls]

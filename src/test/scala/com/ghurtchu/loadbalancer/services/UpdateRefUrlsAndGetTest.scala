@@ -1,9 +1,11 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
-import Urls._
-import UrlsRef._
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
+import com.ghurtchu.loadbalancer.domain.Urls
+import com.ghurtchu.loadbalancer.domain.Urls._
+import com.ghurtchu.loadbalancer.domain.UrlsRef._
+import com.ghurtchu.loadbalancer.http.HttpServer
 import munit.FunSuite
 
 class UpdateRefUrlsAndGetTest extends FunSuite {

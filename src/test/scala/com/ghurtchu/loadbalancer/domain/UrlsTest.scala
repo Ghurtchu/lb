@@ -1,7 +1,7 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.domain
 
+import com.ghurtchu.loadbalancer.domain.Urls._
 import munit.FunSuite
-import Urls._
 
 class UrlsTest extends FunSuite {
 

@@ -1,7 +1,8 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
+import com.ghurtchu.loadbalancer.http.{HttpClient, HttpServer}
 import munit.FunSuite
 import org.http4s.{Request, Uri}
 

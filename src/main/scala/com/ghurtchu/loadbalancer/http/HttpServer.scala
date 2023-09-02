@@ -1,9 +1,17 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.http
 
 import cats.Id
 import cats.effect.IO
 import com.comcast.ip4s._
-import com.ghurtchu.loadbalancer.UrlsRef.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.services.{
+  HealthCheckBackends,
+  LoadBalancer,
+  ParseUri,
+  RoundRobin,
+  SendAndExpect,
+  UpdateRefUrlsAndGet,
+}
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
@@ -22,6 +30,7 @@ object HttpServer {
     healthChecks: HealthChecks,
     port: Port,
     host: Host,
+    healthCheckInterval: Long,
     parseUri: ParseUri,
     updateAndGet: UpdateRefUrlsAndGet,
     backendsRoundRobin: RoundRobin[Option],
@@ -56,6 +65,7 @@ object HttpServer {
           updateAndGet,
           healthChecksRoundRobin,
           SendAndExpect.toHealthCheck(HttpClient.of(client)),
+          healthCheckInterval,
         )
         .toResource
     } yield ()).useForever

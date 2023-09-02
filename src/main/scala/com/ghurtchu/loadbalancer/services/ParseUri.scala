@@ -1,8 +1,8 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.services
 
-import com.ghurtchu.loadbalancer.LoadBalancer.InvalidUri
-import org.http4s.Uri
 import cats.syntax.either._
+import com.ghurtchu.loadbalancer.services.LoadBalancer.InvalidUri
+import org.http4s.Uri
 
 trait ParseUri {
   def apply(uri: String): Either[InvalidUri, Uri]

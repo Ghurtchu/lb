@@ -1,8 +1,8 @@
-package com.ghurtchu.loadbalancer
+package com.ghurtchu.loadbalancer.http
 
 import cats.effect.IO
-import org.http4s.{Request, Uri}
 import org.http4s.client.Client
+import org.http4s.{Request, Uri}
 
 import scala.concurrent.duration.DurationInt
 
@@ -14,10 +14,10 @@ object HttpClient {
 
   def of(client: Client[IO]): HttpClient = new HttpClient {
     override def send(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      requestOpt
-        .fold(client.expect[String](uri)) { request =>
-          client.expect[String](request.withUri(uri))
-        }
+      requestOpt match {
+        case Some(req) => client.expect[String](req.withUri(uri))
+        case None      => client.expect[String](uri)
+      }
   }
 
   val testSuccess: HttpClient = new HttpClient {
