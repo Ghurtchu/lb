@@ -23,4 +23,14 @@ object RoundRobin {
         .getAndUpdate(_.next)
         .map(_.currentUnsafe)
   }
+
+  val testId: RoundRobin[Id] = new RoundRobin[Id] {
+    override def apply(ref: UrlsRef): IO[Id[Url]] =
+      IO.pure(Url("localhost:8081"))
+  }
+
+  val testOpt: RoundRobin[Option] = new RoundRobin[Option] {
+    override def apply(ref: UrlsRef): IO[Option[Url]] =
+      IO.pure(Some(Url("localhost:8081")))
+  }
 }

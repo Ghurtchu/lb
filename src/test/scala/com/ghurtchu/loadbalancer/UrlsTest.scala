@@ -14,7 +14,7 @@ class UrlsTest extends FunSuite {
   test("next [success]") {
     val urls     = sequentialUrls(1, 5)
     val obtained = urls.next
-    val expected = Urls(sequentialUrls(2, 5).urls :+ "url1")
+    val expected = Urls(sequentialUrls(2, 5).values :+ "url1")
 
     assertEquals(obtained, expected)
   }
@@ -69,7 +69,7 @@ class UrlsTest extends FunSuite {
   test("add") {
     val urls     = sequentialUrls(2, 5)
     val obtained = urls.add("url1")
-    val expected = Urls(urls.urls :+ "url1")
+    val expected = Urls(urls.values :+ "url1")
 
     assertEquals(obtained, expected)
   }

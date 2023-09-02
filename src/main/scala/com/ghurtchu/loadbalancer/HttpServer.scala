@@ -36,7 +36,7 @@ object HttpServer {
           LoadBalancer
             .from(
               backends,
-              SendAndExpect.toBackend(client, _),
+              SendAndExpect.toBackend(HttpClient.of(client), _),
               parseUri,
               backendsRoundRobin,
             )
@@ -55,7 +55,7 @@ object HttpServer {
           parseUri,
           updateAndGet,
           healthChecksRoundRobin,
-          SendAndExpect.toHealthCheck(client),
+          SendAndExpect.toHealthCheck(HttpClient.of(client)),
         )
         .toResource
     } yield ()).useForever

@@ -4,17 +4,17 @@ import com.ghurtchu.loadbalancer.Urls.Url
 
 import scala.util.Try
 
-final case class Urls(urls: Vector[Url]) extends AnyVal {
+final case class Urls(values: Vector[Url]) extends AnyVal {
 
-  def next: Urls = Try(copy(urls.tail :+ urls.head)).getOrElse(Urls.empty)
+  def next: Urls = Try(copy(values.tail :+ values.head)).getOrElse(Urls.empty)
 
   def currentOpt: Option[Url] = Try(currentUnsafe).toOption
 
-  def currentUnsafe: Url = urls.head
+  def currentUnsafe: Url = values.head
 
-  def remove(url: Url): Urls = copy(urls.filter(_ != url))
+  def remove(url: Url): Urls = copy(values.filter(_ != url))
 
-  def add(url: Url): Urls = if (urls contains url) this else copy(urls :+ url)
+  def add(url: Url): Urls = if (values contains url) this else copy(values :+ url)
 }
 
 object Urls {

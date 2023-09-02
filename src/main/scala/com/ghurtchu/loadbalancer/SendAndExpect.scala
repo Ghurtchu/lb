@@ -3,7 +3,6 @@ package com.ghurtchu.loadbalancer
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.HttpServer.Status
 import org.http4s.{Request, Uri}
-import org.http4s.client.Client
 
 import scala.concurrent.duration.DurationInt
 
@@ -13,19 +12,20 @@ trait SendAndExpect[+A] {
 
 object SendAndExpect {
 
-  def toBackend(client: Client[IO], req: Request[IO]): SendAndExpect[String] = new SendAndExpect[String] {
+  def toBackend(httpClient: HttpClient, req: Request[IO]): SendAndExpect[String] = new SendAndExpect[String] {
     override def apply(uri: Uri): IO[String] =
-      client
-        .expect[String](req.withUri(uri))
+      httpClient
+        .send(uri, Some(req))
         .handleError(_ => s"server with uri: $uri is dead")
   }
 
-  def toHealthCheck(client: Client[IO]): SendAndExpect[Status] = new SendAndExpect[Status] {
+  def toHealthCheck(httpClient: HttpClient): SendAndExpect[Status] = new SendAndExpect[Status] {
     override def apply(uri: Uri): IO[Status] =
-      client
-        .expect[String](uri)
+      httpClient
+        .send(uri, None)
         .as(Status.Alive)
         .timeout(5.seconds)
         .handleError(_ => Status.Dead)
   }
+
 }

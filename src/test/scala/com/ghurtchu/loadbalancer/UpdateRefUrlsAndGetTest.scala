@@ -13,27 +13,23 @@ class UpdateRefUrlsAndGetTest extends FunSuite {
 
   test("Alive") {
     val status = HttpServer.Status.Alive
-    IO.ref(Urls(Vector("localhost:8081", "localhost:8082")))
-      .flatMap { ref =>
-        val backends = Backends(ref)
+    val urls   = Urls(Vector("localhost:8081", "localhost:8082"))
 
-        for {
-          updated <- updateRefUrlsAndGet(backends, localhost, status)
-        } yield updated.urls.contains(localhost)
-      }
+    (for {
+      ref     <- IO.ref(urls)
+      updated <- updateRefUrlsAndGet(Backends(ref), localhost, status)
+    } yield updated.values == (urls.values :+ localhost))
       .unsafeRunSync()
   }
 
   test("Dead") {
     val status = HttpServer.Status.Dead
-    IO.ref(Urls(Vector("localhost:8081", "localhost:8082", localhost)))
-      .flatMap { ref =>
-        val backends = Backends(ref)
+    val urls   = Urls(Vector("localhost:8081", "localhost:8082", localhost))
 
-        for {
-          updated <- updateRefUrlsAndGet(backends, localhost, status)
-        } yield !updated.urls.contains(localhost)
-      }
+    (for {
+      ref     <- IO.ref(urls)
+      updated <- updateRefUrlsAndGet(Backends(ref), localhost, status)
+    } yield updated.values == Vector("localhost:8081", "localhost:8082"))
       .unsafeRunSync()
   }
 
