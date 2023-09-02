@@ -17,7 +17,7 @@ class ParseUriTest extends FunSuite {
   }
 
   test("invalid URI") {
-    val uriStr   = "definitely invalid uri"
+    val uriStr   = "definitely invalid uri XD"
     val obtained = parser(uriStr)
     val expected = Left(InvalidUri(uriStr))
 

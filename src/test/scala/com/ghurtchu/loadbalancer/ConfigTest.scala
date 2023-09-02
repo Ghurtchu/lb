@@ -5,9 +5,9 @@ import munit.FunSuite
 class ConfigTest extends FunSuite {
 
   val config = Config(
-    "8081",
-    "localhost",
-    Urls.empty,
+    port = "8081",
+    host = "localhost",
+    backends = Urls.empty,
   )
 
   test("hostOr") {
