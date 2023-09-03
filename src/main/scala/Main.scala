@@ -1,4 +1,4 @@
-import cats.effect.{IO, IOApp, Ref}
+import cats.effect.{IO, IOApp}
 import cats.implicits.catsSyntaxTuple2Semigroupal
 import com.comcast.ip4s.{Host, Port}
 import com.ghurtchu.loadbalancer.domain.{Config, Urls}
@@ -12,8 +12,8 @@ object Main extends IOApp.Simple {
 
   override def run: IO[Unit] =
     for {
-      config                   <- IO.delay(ConfigSource.default.loadOrThrow[Config])
-      (backends, healthChecks) <- refs(config.backends)(Backends, HealthChecks)
+      config                   <- IO(ConfigSource.default.loadOrThrow[Config])
+      (backends, healthChecks) <- refs(config.backends)
       (host, port)             <- IO.fromEither {
         hostAndPort(
           config.hostOr(fallback = "0.0.0.0"),
@@ -36,16 +36,11 @@ object Main extends IOApp.Simple {
 
   private def refs(
     urls: Urls,
-  )(
-    toBackends: Ref[IO, Urls] => Backends,
-    toHealthChecks: Ref[IO, Urls] => HealthChecks,
   ): IO[(Backends, HealthChecks)] =
-    (
-      IO.ref(urls),
-      IO.ref(urls),
-    ).mapN { case (backendRef, healthCheckRef) =>
-      (toBackends(backendRef), toHealthChecks(healthCheckRef))
-    }
+    for {
+      backendsRef     <- IO.ref(urls)
+      healthChecksRef <- IO.ref(urls)
+    } yield (Backends(backendsRef), HealthChecks(healthChecksRef))
 
   private def hostAndPort(
     host: String,
