@@ -11,7 +11,7 @@ trait UpdateRefUrlsAndGet {
 
 object UpdateRefUrlsAndGet {
 
-  def of: UpdateRefUrlsAndGet = new UpdateRefUrlsAndGet {
+  def impl: UpdateRefUrlsAndGet = new UpdateRefUrlsAndGet {
     override def apply(ref: UrlsRef, url: Url, status: Status): IO[Urls] =
       status match {
         case Status.Alive =>

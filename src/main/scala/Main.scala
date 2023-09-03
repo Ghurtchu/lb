@@ -27,8 +27,8 @@ object Main extends IOApp.Simple {
         port,
         host,
         config.healthCheckInterval,
-        ParseUri.of,
-        UpdateRefUrlsAndGet.of,
+        ParseUri.impl,
+        UpdateRefUrlsAndGet.impl,
         RoundRobin.forBackends,
         RoundRobin.forHealthChecks,
       )

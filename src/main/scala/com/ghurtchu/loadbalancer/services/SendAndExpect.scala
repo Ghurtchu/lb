@@ -23,7 +23,7 @@ object SendAndExpect {
   def toHealthCheck(httpClient: HttpClient): SendAndExpect[Status] = new SendAndExpect[Status] {
     override def apply(uri: Uri): IO[Status] =
       httpClient
-        .sendAndReceive(uri, None)
+        .sendAndReceive(uri)
         .as(Status.Alive)
         .timeout(5.seconds)
         .handleError(_ => Status.Dead)

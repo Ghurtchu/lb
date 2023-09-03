@@ -10,7 +10,7 @@ import munit.FunSuite
 
 class UpdateRefUrlsAndGetTest extends FunSuite {
 
-  val updateRefUrlsAndGet = UpdateRefUrlsAndGet.of
+  val updateRefUrlsAndGet = UpdateRefUrlsAndGet.impl
   val localhost           = Url("localhost:8083")
 
   test("Alive") {

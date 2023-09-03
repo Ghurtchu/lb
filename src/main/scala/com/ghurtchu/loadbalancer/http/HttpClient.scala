@@ -7,7 +7,7 @@ import org.http4s.{Request, Uri}
 import scala.concurrent.duration.DurationInt
 
 trait HttpClient {
-  def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String]
+  def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]] = None): IO[String]
 }
 
 object HttpClient {

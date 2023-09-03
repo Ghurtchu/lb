@@ -39,12 +39,13 @@ object HttpServer {
       client <- EmberClientBuilder
         .default[IO]
         .build
-      httpApp = Logger
+      httpClient = HttpClient.of(client)
+      httpApp    = Logger
         .httpApp(logHeaders = true, logBody = true) {
           LoadBalancer
             .from(
               backends,
-              SendAndExpect.toBackend(HttpClient.of(client), _),
+              SendAndExpect.toBackend(httpClient, _),
               parseUri,
               backendsRoundRobin,
             )
@@ -63,7 +64,7 @@ object HttpServer {
           parseUri,
           updateRefUrlsAndGet,
           healthChecksRoundRobin,
-          SendAndExpect.toHealthCheck(HttpClient.of(client)),
+          SendAndExpect.toHealthCheck(httpClient),
           healthCheckInterval,
         )
         .toResource
