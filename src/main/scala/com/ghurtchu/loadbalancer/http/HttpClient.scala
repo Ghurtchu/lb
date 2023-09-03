@@ -14,9 +14,10 @@ object HttpClient {
 
   def of(client: Client[IO]): HttpClient = new HttpClient {
     override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      requestOpt match {
-        case Some(req) => client.expect[String](req.withUri(uri))
-        case None      => client.expect[String](uri)
+      requestOpt.fold(
+        client.expect[String](uri),
+      ) { request =>
+        client.expect[String](request.withUri(uri))
       }
   }
 
