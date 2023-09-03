@@ -22,8 +22,8 @@ object HealthCheckBackends {
       currentUrl <- healthChecksRoundRobin(healthChecks)
       uri        <- IO.fromEither(parseUri(currentUrl.value))
       status     <- sendAndExpectStatus(uri)
-      ref        <- updateRef(backends, currentUrl, status)
-    } yield ref)
+      _          <- updateRef(backends, currentUrl, status)
+    } yield ())
       .flatMap(_ => IO.sleep(healthCheckInterval.seconds))
       .foreverM
 }
