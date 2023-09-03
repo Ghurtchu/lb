@@ -34,13 +34,11 @@ object Main extends IOApp.Simple {
       )
     } yield ()
 
-  private def refs(
-    urls: Urls,
-  ): IO[(Backends, HealthChecks)] =
-    for {
-      backendsRef     <- IO.ref(urls)
-      healthChecksRef <- IO.ref(urls)
-    } yield (Backends(backendsRef), HealthChecks(healthChecksRef))
+  private def refs(urls: Urls): IO[(Backends, HealthChecks)] =
+    (
+      IO.ref(urls).map(Backends),
+      IO.ref(urls).map(HealthChecks),
+    ).mapN((_, _))
 
   private def hostAndPort(
     host: String,
