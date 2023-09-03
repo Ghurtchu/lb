@@ -14,13 +14,14 @@ object RoundRobin {
   type BackendsRoundRobin     = RoundRobin[Option]
   type HealthChecksRoundRobin = RoundRobin[Id]
 
-  def forBackends: BackendsRoundRobin         = new BackendsRoundRobin {
+  def forBackends: BackendsRoundRobin = new BackendsRoundRobin {
     override def apply(ref: UrlsRef): IO[Option[Url]] =
       ref.urls
         .getAndUpdate(_.next)
         .map(_.currentOpt)
 
   }
+
   def forHealthChecks: HealthChecksRoundRobin = new HealthChecksRoundRobin {
     override def apply(ref: UrlsRef): IO[Id[Url]] =
       ref.urls
