@@ -6,20 +6,20 @@ import org.http4s.Uri
 
 class ParseUriTest extends FunSuite {
 
-  val parser = ParseUri.of
+  val parseUri = ParseUri.of
 
   test("valid URI") {
-    val uriStr   = "0.0.0.0/8080"
-    val obtained = parser(uriStr)
-    val expected = Right(Uri.unsafeFromString(uriStr))
+    val uri      = "0.0.0.0/8080"
+    val obtained = parseUri(uri)
+    val expected = Right(Uri.unsafeFromString(uri))
 
     assertEquals(obtained, expected)
   }
 
   test("invalid URI") {
-    val uriStr   = "definitely invalid uri XD"
-    val obtained = parser(uriStr)
-    val expected = Left(InvalidUri(uriStr))
+    val uri      = "definitely invalid uri XD"
+    val obtained = parseUri(uri)
+    val expected = Left(InvalidUri(uri))
 
     assertEquals(obtained, expected)
   }

@@ -2,6 +2,7 @@ package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.domain.UrlsRef.Backends
+import com.ghurtchu.loadbalancer.services.RoundRobin.BackendsRoundRobin
 import org.http4s.dsl.Http4sDsl
 import org.http4s.{HttpRoutes, Request}
 
@@ -9,18 +10,18 @@ object LoadBalancer {
 
   def from(
     backends: Backends,
-    send: Request[IO] => SendAndExpect[String],
+    sendAndExpectResponse: Request[IO] => SendAndExpect[String],
     parseUri: ParseUri,
-    roundRobin: RoundRobin[Option],
+    backendsRoundRobin: BackendsRoundRobin,
   ): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
     HttpRoutes.of[IO] { case req @ GET -> Root =>
-      roundRobin(backends).flatMap {
-        _.fold(Ok("All backends are inactive")) { backend =>
+      backendsRoundRobin(backends).flatMap {
+        _.fold(Ok("All backends are inactive")) { currentUrl =>
           for {
-            uri      <- IO.fromEither(parseUri(backend.value))
-            response <- send(req)(uri)
+            uri      <- IO.fromEither(parseUri(currentUrl.value))
+            response <- sendAndExpectResponse(req)(uri)
             result   <- Ok(response)
           } yield result
         }

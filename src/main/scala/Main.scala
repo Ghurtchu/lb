@@ -12,7 +12,7 @@ object Main extends IOApp.Simple {
 
   override def run: IO[Unit] =
     for {
-      config                   <- IO(ConfigSource.default.loadOrThrow[Config])
+      config                   <- IO.delay(ConfigSource.default.loadOrThrow[Config])
       (backends, healthChecks) <- refs(config.backends)(Backends, HealthChecks)
       (host, port)             <- IO.fromEither {
         hostAndPort(
@@ -43,8 +43,8 @@ object Main extends IOApp.Simple {
     (
       IO.ref(urls),
       IO.ref(urls),
-    ).mapN { case (first, second) =>
-      (toBackends(first), toHealthChecks(second))
+    ).mapN { case (backendRef, healthCheckRef) =>
+      (toBackends(backendRef), toHealthChecks(healthCheckRef))
     }
 
   private def hostAndPort(
