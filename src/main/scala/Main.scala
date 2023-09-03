@@ -1,5 +1,5 @@
 import cats.effect.{IO, IOApp}
-import cats.implicits.catsSyntaxTuple2Semigroupal
+import cats.implicits.{catsSyntaxTuple2Parallel, catsSyntaxTuple2Semigroupal}
 import com.comcast.ip4s.{Host, Port}
 import com.ghurtchu.loadbalancer.domain.{Config, Urls}
 import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
@@ -38,7 +38,7 @@ object Main extends IOApp.Simple {
     (
       IO.ref(urls).map(Backends),
       IO.ref(urls).map(HealthChecks),
-    ).mapN((_, _))
+    ).parMapN((_, _))
 
   private def hostAndPort(
     host: String,
