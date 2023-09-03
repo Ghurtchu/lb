@@ -36,9 +36,11 @@ object Main extends IOApp.Simple {
 
   private def refs(urls: Urls): IO[(Backends, HealthChecks)] =
     (
-      IO.ref(urls).map(Backends),
-      IO.ref(urls).map(HealthChecks),
-    ).parMapN((_, _))
+      IO.ref(urls),
+      IO.ref(urls),
+    ).parMapN { case (backendsRef, healthChecksRef) =>
+      (Backends(backendsRef), HealthChecks(healthChecksRef))
+    }
 
   private def hostAndPort(
     host: String,
@@ -47,6 +49,6 @@ object Main extends IOApp.Simple {
     (
       Host.fromString(host),
       Port.fromInt(port),
-    ).mapN((_, _))
+    ).tupled
       .toRight(Config.InvalidConfig)
 }
