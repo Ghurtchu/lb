@@ -10,7 +10,7 @@ import scala.concurrent.duration.DurationLong
 
 object HealthCheckBackends {
 
-  def periodicall
+  def periodically(
     healthChecks: HealthChecks,
     backends: Backends,
     parseUri: ParseUri,
