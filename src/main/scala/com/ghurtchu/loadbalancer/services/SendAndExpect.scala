@@ -20,8 +20,8 @@ object SendAndExpect {
         httpClient
           .sendAndReceive(uri, Some(req))
           .handleError {
-            case _: UnexpectedStatus => s"resource not found"
-            case _                   => s"server with uri: $uri is dead"
+            case _: UnexpectedStatus => s"resource at uri: [$uri] was not found"
+            case _                   => s"server with uri: [$uri] is dead"
           }
     }
 

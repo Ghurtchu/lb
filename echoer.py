@@ -7,11 +7,14 @@ port = int(sys.argv[1])
 
 @app.route("/")
 def hello():
-    return f"hello from http://{host}:{port}"
+    return f"hello from {url(host, port)}"
 
 @app.route("/health")
 def health():
-    return "I am alive"
+    return f"{url(host, port)} is alive and healthy ^_^"
+
+def url(host, port):
+    return f"http://{host}:{port}"
 
 if __name__ == '__main__':
     app.run(host=host, port=port, debug=True)

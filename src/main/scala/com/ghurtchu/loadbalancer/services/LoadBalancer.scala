@@ -19,8 +19,8 @@ object LoadBalancer {
     HttpRoutes.of[IO] { case req =>
       backendsRoundRobin(backends).flatMap {
         _.fold(Ok("All backends are inactive")) { currentUrl =>
-          val urlUpdated = currentUrl.value concat req.uri.path.renderString
-          println(urlUpdated)
+          val urlUpdated = currentUrl.value
+            .concat(req.uri.path.renderString)
           for {
             uri      <- IO.fromEither(parseUri(urlUpdated))
             response <- sendAndExpectResponse(req)(uri)

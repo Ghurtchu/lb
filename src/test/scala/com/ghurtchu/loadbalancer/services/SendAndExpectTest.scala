@@ -28,7 +28,7 @@ class SendAndExpectTest extends FunSuite {
 
     sendAndExpect(backend)
       .map { obtained =>
-        assertEquals(obtained, s"server with uri: $uri is dead")
+        assertEquals(obtained, s"server with uri: [$uri] is dead")
       }
       .unsafeRunSync()
   }
