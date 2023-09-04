@@ -3,6 +3,7 @@ package com.ghurtchu.loadbalancer.services
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.http.HttpClient
 import com.ghurtchu.loadbalancer.http.HttpServer.Status
+import org.http4s.client.UnexpectedStatus
 import org.http4s.{Request, Uri}
 
 import scala.concurrent.duration.DurationInt
@@ -18,7 +19,10 @@ object SendAndExpect {
       override def apply(uri: Uri): IO[String] =
         httpClient
           .sendAndReceive(uri, Some(req))
-          .handleError(_ => s"server with uri: $uri is dead")
+          .handleError {
+            case _: UnexpectedStatus => s"resource not found"
+            case _                   => s"server with uri: $uri is dead"
+          }
     }
 
   def toHealthCheck(httpClient: HttpClient): SendAndExpect[Status] =
