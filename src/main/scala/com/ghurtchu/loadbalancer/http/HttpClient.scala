@@ -14,11 +14,12 @@ object HttpClient {
 
   def of(client: Client[IO]): HttpClient = new HttpClient {
     override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      requestOpt.fold(
-        client.expect[String](uri),
-      ) { request =>
-        client.expect[String](request.withUri(uri))
-      }
+      IO.println(s"sending request to $uri") *>
+        requestOpt.fold(
+          client.expect[String](uri),
+        ) { request =>
+          client.expect[String](request.withUri(uri))
+        }
   }
 
   val testSuccess: HttpClient = new HttpClient {
