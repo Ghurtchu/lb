@@ -1,12 +1,14 @@
 package com.ghurtchu.loadbalancer.domain
 
+import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
+
 import scala.util.Try
 
 final case class Config(
   port: String,
   host: String,
   backends: Urls,
-  healthCheckInterval: Long,
+  healthCheckInterval: HealthCheckInterval,
 ) {
 
   def hostOr(fallback: String): String =
@@ -26,4 +28,6 @@ object Config {
     override def getMessage: String =
       "Invalid port or host, please fix Config"
   }
+
+  final case class HealthCheckInterval(value: Long) extends AnyVal
 }

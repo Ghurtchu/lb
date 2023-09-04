@@ -1,6 +1,7 @@
 package com.ghurtchu.loadbalancer.domain
 
 import munit.FunSuite
+import Config.HealthCheckInterval
 
 class ConfigTest extends FunSuite {
 
@@ -8,7 +9,7 @@ class ConfigTest extends FunSuite {
     port = "8081",
     host = "localhost",
     backends = Urls.empty,
-    healthCheckInterval = 1,
+    healthCheckInterval = HealthCheckInterval(1),
   )
 
   test("hostOr") {

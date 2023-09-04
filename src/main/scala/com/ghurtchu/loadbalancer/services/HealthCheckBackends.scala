@@ -1,6 +1,7 @@
 package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
+import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
 import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.http.HttpServer.Status
 import com.ghurtchu.loadbalancer.services.RoundRobin.HealthChecksRoundRobin
@@ -16,7 +17,7 @@ object HealthCheckBackends {
     updateRef: UpdateRefUrlsAndGet,
     healthChecksRoundRobin: HealthChecksRoundRobin,
     sendAndExpectStatus: SendAndExpect[Status],
-    healthCheckInterval: Long,
+    healthCheckInterval: HealthCheckInterval,
   ): IO[Unit] =
     (for {
       currentUrl <- healthChecksRoundRobin(healthChecks)
@@ -24,6 +25,6 @@ object HealthCheckBackends {
       status     <- sendAndExpectStatus(uri)
       _          <- updateRef(backends, currentUrl, status)
     } yield ())
-      .flatMap(_ => IO.sleep(healthCheckInterval.seconds))
+      .flatMap(_ => IO.sleep(healthCheckInterval.value.seconds))
       .foreverM
 }

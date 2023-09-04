@@ -2,6 +2,7 @@ package com.ghurtchu.loadbalancer.http
 
 import cats.effect.IO
 import com.comcast.ip4s._
+import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
 import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.services.RoundRobin.{BackendsRoundRobin, HealthChecksRoundRobin}
 import com.ghurtchu.loadbalancer.services.{
@@ -29,7 +30,7 @@ object HttpServer {
     healthChecks: HealthChecks,
     port: Port,
     host: Host,
-    healthCheckInterval: Long,
+    healthCheckInterval: HealthCheckInterval,
     parseUri: ParseUri,
     updateRefUrlsAndGet: UpdateRefUrlsAndGet,
     backendsRoundRobin: BackendsRoundRobin,
