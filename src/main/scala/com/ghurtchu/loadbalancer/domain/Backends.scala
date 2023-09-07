@@ -6,7 +6,7 @@ trait UrlsRef {
   def urls: Ref[IO, Urls]
 }
 
-object UrlsRef {
+object Backends {
   final case class Backends(urls: Ref[IO, Urls])     extends UrlsRef
   final case class HealthChecks(urls: Ref[IO, Urls]) extends UrlsRef
 }

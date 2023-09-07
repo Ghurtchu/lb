@@ -1,7 +1,7 @@
 package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.domain.UrlsRef.Backends
+import com.ghurtchu.loadbalancer.domain.Backends.Backends
 import com.ghurtchu.loadbalancer.services.RoundRobin.BackendsRoundRobin
 import org.http4s.dsl.Http4sDsl
 import org.http4s.{HttpRoutes, Request}

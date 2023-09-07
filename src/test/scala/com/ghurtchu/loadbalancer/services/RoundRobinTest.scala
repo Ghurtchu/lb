@@ -4,7 +4,7 @@ import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.ghurtchu.loadbalancer.domain.Urls
 import com.ghurtchu.loadbalancer.domain.Urls.Url
-import com.ghurtchu.loadbalancer.domain.UrlsRef._
+import com.ghurtchu.loadbalancer.domain.Backends._
 import munit.FunSuite
 
 class RoundRobinTest extends FunSuite {

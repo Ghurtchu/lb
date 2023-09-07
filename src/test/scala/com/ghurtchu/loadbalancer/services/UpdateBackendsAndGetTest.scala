@@ -4,14 +4,14 @@ import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import com.ghurtchu.loadbalancer.domain.Urls
 import com.ghurtchu.loadbalancer.domain.Urls._
-import com.ghurtchu.loadbalancer.domain.UrlsRef._
+import com.ghurtchu.loadbalancer.domain.Backends._
 import com.ghurtchu.loadbalancer.http.HttpServer
 import munit.FunSuite
 
-class UpdateRefUrlsAndGetTest extends FunSuite {
+class UpdateBackendsAndGetTest extends FunSuite {
 
-  val updateRefUrlsAndGet = UpdateRefUrlsAndGet.impl
-  val localhost           = Url("localhost:8083")
+  val updateBackendsAndGet = UpdateBackendsAndGet.impl
+  val localhost            = Url("localhost:8083")
 
   test("Alive") {
     val status = HttpServer.Status.Alive
@@ -19,7 +19,7 @@ class UpdateRefUrlsAndGetTest extends FunSuite {
 
     (for {
       ref     <- IO.ref(urls)
-      updated <- updateRefUrlsAndGet(Backends(ref), localhost, status)
+      updated <- updateBackendsAndGet(Backends(ref), localhost, status)
     } yield updated.values == (urls.values :+ localhost))
       .unsafeRunSync()
   }
@@ -30,7 +30,7 @@ class UpdateRefUrlsAndGetTest extends FunSuite {
 
     (for {
       ref     <- IO.ref(urls)
-      updated <- updateRefUrlsAndGet(Backends(ref), localhost, status)
+      updated <- updateBackendsAndGet(Backends(ref), localhost, status)
     } yield updated.values == Vector("localhost:8081", "localhost:8082"))
       .unsafeRunSync()
   }
