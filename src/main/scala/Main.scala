@@ -2,7 +2,7 @@ import cats.effect.{IO, IOApp}
 import cats.implicits.{catsSyntaxTuple2Parallel, catsSyntaxTuple2Semigroupal}
 import com.comcast.ip4s.{Host, Port}
 import com.ghurtchu.loadbalancer.domain.{Config, Urls}
-import com.ghurtchu.loadbalancer.domain.Backends.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.http.HttpServer
 import com.ghurtchu.loadbalancer.services.{ParseUri, RoundRobin, UpdateBackendsAndGet}
 import pureconfig._

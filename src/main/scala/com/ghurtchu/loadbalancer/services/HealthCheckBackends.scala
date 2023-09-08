@@ -2,7 +2,7 @@ package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
-import com.ghurtchu.loadbalancer.domain.Backends.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.http.HttpServer.Status
 import com.ghurtchu.loadbalancer.services.RoundRobin.HealthChecksRoundRobin
 

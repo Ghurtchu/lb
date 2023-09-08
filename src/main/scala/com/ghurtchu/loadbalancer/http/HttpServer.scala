@@ -3,15 +3,9 @@ package com.ghurtchu.loadbalancer.http
 import cats.effect.IO
 import com.comcast.ip4s._
 import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
-import com.ghurtchu.loadbalancer.domain.Backends.{Backends, HealthChecks}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.services.RoundRobin.{BackendsRoundRobin, HealthChecksRoundRobin}
-import com.ghurtchu.loadbalancer.services.{
-  HealthCheckBackends,
-  LoadBalancer,
-  ParseUri,
-  SendAndExpect,
-  UpdateBackendsAndGet,
-}
+import com.ghurtchu.loadbalancer.services.{HealthCheckBackends, LoadBalancer, ParseUri, SendAndExpect, UpdateBackendsAndGet}
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger

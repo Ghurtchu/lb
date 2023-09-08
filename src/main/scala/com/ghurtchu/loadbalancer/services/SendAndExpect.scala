@@ -7,7 +7,7 @@ import org.http4s.client.UnexpectedStatus
 import org.http4s.{Request, Uri}
 import cats.syntax.option._
 
-import scala.concurrent.duration.{DurationInt, NANOSECONDS}
+import scala.concurrent.duration.DurationInt
 
 trait SendAndExpect[A] {
   def apply(uri: Uri): IO[A]
@@ -35,5 +35,4 @@ object SendAndExpect {
           .timeout(5.seconds)
           .handleError(_ => Status.Dead)
     }
-
 }

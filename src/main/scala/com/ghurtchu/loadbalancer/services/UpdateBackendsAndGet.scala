@@ -1,9 +1,9 @@
 package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.domain.Backends.Backends
 import com.ghurtchu.loadbalancer.domain.Urls.Url
-import com.ghurtchu.loadbalancer.domain.{Backends, Urls}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.Backends
+import com.ghurtchu.loadbalancer.domain.Urls
 import com.ghurtchu.loadbalancer.http.HttpServer.Status
 
 trait UpdateBackendsAndGet {
