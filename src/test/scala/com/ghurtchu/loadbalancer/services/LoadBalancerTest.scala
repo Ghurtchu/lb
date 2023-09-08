@@ -35,7 +35,7 @@ class LoadBalancerTest extends CatsEffectSuite:
         _ => SendAndExpect.BackendSuccessTest,
         ParseUri.Impl,
         AddRequestPathToBackendUrl.Impl,
-        RoundRobin.TestOpt
+        RoundRobin.LocalHost8081
       )
         result <- loadBalancer.orNotFound.run(Request[IO](uri = Uri.unsafeFromString("localhost:8080/items/1")))
     yield result.body.compile.toVector.map(bytes => String(bytes.toArray)))
