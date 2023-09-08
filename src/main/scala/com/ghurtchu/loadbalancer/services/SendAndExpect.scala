@@ -24,8 +24,8 @@ object SendAndExpect:
       override def apply(uri: Uri): IO[String] =
         info"[LOAD-BALANCER] sending request to $uri" *> httpClient
           .sendAndReceive(uri, req.some)
-          .handleErrorWith {
-            case _: UnexpectedStatus =>
+          .handleErrorWith:
+            case UnexpectedStatus(org.http4s.Status.NotFound, _, _) =>
               s"resource at uri: $uri was not found"
                 .pure[IO]
                 .flatTap(msg => warn"$msg")
@@ -33,7 +33,6 @@ object SendAndExpect:
               s"server with uri: $uri is dead"
                 .pure[IO]
                 .flatTap(msg => warn"$msg")
-          }
 
   def toHealthCheck(httpClient: HttpClient): SendAndExpect[ServerHealthStatus] =
     new SendAndExpect[ServerHealthStatus]:
@@ -45,3 +44,5 @@ object SendAndExpect:
             .flatTap(ss => info"$uri is alive")
             .timeout(5.seconds)
             .handleErrorWith(_ => warn"$uri is dead" *> IO.pure(ServerHealthStatus.Dead))
+
+  val BackendSuccessTest: SendAndExpect[String] = _ => IO("Success")
