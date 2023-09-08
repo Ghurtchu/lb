@@ -25,7 +25,6 @@ object LoadBalancer:
           val url = addRequestPathToBackendUrl(backendUrl.value, request)
           for
             uri      <- IO.fromEither(parseUri(url))
-            _        <- IO.println(uri)
             response <- sendAndExpectResponse(request)(uri)
             result   <- Ok(response)
           yield result
