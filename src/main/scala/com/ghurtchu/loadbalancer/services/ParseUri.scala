@@ -1,7 +1,7 @@
 package com.ghurtchu.loadbalancer.services
 
 import cats.syntax.either._
-import com.ghurtchu.loadbalancer.services.LoadBalancer.InvalidUri
+import com.ghurtchu.loadbalancer.errors.parsing.InvalidUri
 import org.http4s.Uri
 
 trait ParseUri:

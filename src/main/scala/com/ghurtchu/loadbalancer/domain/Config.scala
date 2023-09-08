@@ -1,6 +1,5 @@
 package com.ghurtchu.loadbalancer.domain
 
-import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
 import com.ghurtchu.loadbalancer.domain.Url
 import pureconfig.ConfigReader
 import pureconfig._
@@ -32,11 +31,3 @@ object Config:
 
   given healthCheckReader: ConfigReader[HealthCheckInterval] =
     ConfigReader[Long].map(HealthCheckInterval.apply)
-
-  type InvalidConfig = InvalidConfig.type
-
-  case object InvalidConfig extends Throwable:
-    override def getMessage: String =
-      "Invalid port or host, please fix Config"
-
-  final case class HealthCheckInterval(value: Long)

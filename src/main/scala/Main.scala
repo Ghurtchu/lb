@@ -4,6 +4,7 @@ import com.comcast.ip4s.{Host, Port}
 import com.ghurtchu.loadbalancer.domain.UrlsRef.*
 import com.ghurtchu.loadbalancer.domain.*
 import com.ghurtchu.loadbalancer.domain.Url
+import com.ghurtchu.loadbalancer.errors.config.InvalidConfig
 import com.ghurtchu.loadbalancer.http.HttpServer
 import com.ghurtchu.loadbalancer.services.{ParseUri, RoundRobin, UpdateBackendsAndGet}
 import org.typelevel.log4cats.Logger
@@ -46,9 +47,9 @@ object Main extends IOApp.Simple:
   private def hostAndPort(
     host: String,
     port: Int,
-  ): Either[Config.InvalidConfig, (Host, Port)] =
+  ): Either[InvalidConfig, (Host, Port)] =
     (
       Host.fromString(host),
       Port.fromInt(port),
     ).tupled
-      .toRight(Config.InvalidConfig)
+      .toRight(InvalidConfig)

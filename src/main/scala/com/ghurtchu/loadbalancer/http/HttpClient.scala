@@ -9,34 +9,19 @@ import org.typelevel.log4cats.syntax.*
 
 import scala.concurrent.duration.DurationInt
 
-trait HttpClient {
+trait HttpClient:
   def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String]
-}
 
-object HttpClient {
+object HttpClient:
 
   implicit def logger: Logger[IO] = Slf4jLogger.getLogger[IO]
 
-  def of(client: Client[IO]): HttpClient = new HttpClient {
+  def of(client: Client[IO]): HttpClient = new HttpClient:
     override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
       requestOpt.fold(client.expect[String](uri)) { request =>
         client.expect[String](request.withUri(uri))
       }
-  }
 
-  val testSuccess: HttpClient = new HttpClient {
-    override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      IO.pure("Hello")
-  }
-
-  val testFailure: HttpClient = new HttpClient {
-    override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      IO.raiseError(new RuntimeException("Server is dead"))
-  }
-
-  val testTimeout: HttpClient = new HttpClient {
-    override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      IO.sleep(6.seconds)
-        .as("Hello")
-  }
-}
+  val testSuccess: HttpClient = (_, _) => IO.pure("Hello")
+  val testFailure: HttpClient = (_, _) => IO.raiseError(new RuntimeException("Server is dead"))
+  val testTimeout: HttpClient = (_, _) => IO.sleep(6.seconds).as("Hello")

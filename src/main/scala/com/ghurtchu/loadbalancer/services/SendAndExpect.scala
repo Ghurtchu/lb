@@ -19,7 +19,7 @@ object SendAndExpect:
   implicit def logger: Logger[IO] = Slf4jLogger.getLogger[IO]
 
   def toBackend(httpClient: HttpClient, req: Request[IO]): SendAndExpect[String] =
-    new SendAndExpect[String] {
+    new SendAndExpect[String]:
       override def apply(uri: Uri): IO[String] =
         info"[LOAD-BALANCER] sending request to $uri" *> httpClient
           .sendAndReceive(uri, req.some)
@@ -31,10 +31,9 @@ object SendAndExpect:
               IO.pure(s"server with uri: $uri is dead")
                 .flatTap(msg => warn"$msg")
           }
-    }
 
   def toHealthCheck(httpClient: HttpClient): SendAndExpect[ServerStatus] =
-    new SendAndExpect[ServerStatus] {
+    new SendAndExpect[ServerStatus]:
       override def apply(uri: Uri): IO[ServerStatus] =
         info"[HEALTH-CHECK] checking $uri health" *>
           httpClient
@@ -43,4 +42,3 @@ object SendAndExpect:
             .flatTap(ss => info"$uri is alive")
             .timeout(5.seconds)
             .handleErrorWith(_ => warn"$uri is dead" *> IO.pure(ServerStatus.Dead))
-    }

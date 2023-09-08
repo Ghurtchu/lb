@@ -1,7 +1,6 @@
 package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
-import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
 import com.ghurtchu.loadbalancer.domain.*
 import com.ghurtchu.loadbalancer.domain.UrlsRef.*
 import com.ghurtchu.loadbalancer.http.ServerStatus
@@ -22,7 +21,7 @@ object HealthCheckBackends:
   ): IO[Unit] =
     (for
       currentUrl <- healthChecksRoundRobin(healthChecks)
-      uri        <- IO.fromEither(parseUri(currentUrl.value)).flatTap(IO.println)
+      uri        <- IO.fromEither(parseUri(currentUrl.value))
       status     <- sendAndExpectStatus(uri)
       _          <- updateBackendsAndGet(backends, currentUrl, status)
     yield ())

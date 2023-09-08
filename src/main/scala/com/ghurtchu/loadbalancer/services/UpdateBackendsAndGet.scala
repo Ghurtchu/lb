@@ -15,11 +15,10 @@ trait UpdateBackendsAndGet:
 
 object UpdateBackendsAndGet:
 
-  def impl: UpdateBackendsAndGet = new UpdateBackendsAndGet {
+  def impl: UpdateBackendsAndGet = new UpdateBackendsAndGet:
     override def apply(backends: Backends, url: Url, status: ServerStatus): IO[Urls] =
       backends.urls.updateAndGet { urls =>
         status match
           case ServerStatus.Alive => urls.add(url)
           case ServerStatus.Dead  => urls.remove(url)
       }
-  }

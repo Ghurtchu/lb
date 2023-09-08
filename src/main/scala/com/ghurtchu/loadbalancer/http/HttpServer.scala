@@ -2,7 +2,6 @@ package com.ghurtchu.loadbalancer.http
 
 import cats.effect.IO
 import com.comcast.ip4s._
-import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
 import com.ghurtchu.loadbalancer.domain.*
 import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.services.RoundRobin.{BackendsRoundRobin, HealthChecksRoundRobin}
