@@ -19,13 +19,13 @@ object LoadBalancer:
   ): HttpRoutes[IO] =
     val dsl = new Http4sDsl[IO] {}
     import dsl._
-    HttpRoutes.of[IO] { case request =>
+    HttpRoutes.of[IO] { anyRequest =>
       backendsRoundRobin(backends).flatMap {
         _.fold(Ok("All backends are inactive")) { backendUrl =>
-          val url = addRequestPathToBackendUrl(backendUrl.value, request)
+          val url = addRequestPathToBackendUrl(backendUrl.value, anyRequest)
           for
             uri      <- IO.fromEither(parseUri(url))
-            response <- sendAndExpectResponse(request)(uri)
+            response <- sendAndExpectResponse(anyRequest)(uri)
             result   <- Ok(response)
           yield result
         }

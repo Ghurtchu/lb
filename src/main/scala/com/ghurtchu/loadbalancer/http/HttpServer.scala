@@ -36,7 +36,7 @@ object HttpServer:
         .build
       httpClient = HttpClient.of(client)
       httpApp    = Logger
-        .httpApp(logHeaders = false, logBody = true) {
+        .httpApp(logHeaders = false, logBody = true):
           LoadBalancer
             .from(
               backends,
@@ -46,7 +46,6 @@ object HttpServer:
               backendsRoundRobin,
             )
             .orNotFound
-        }
       _ <- EmberServerBuilder
         .default[IO]
         .withHost(host)

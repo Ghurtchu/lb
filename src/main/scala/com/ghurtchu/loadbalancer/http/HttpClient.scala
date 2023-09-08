@@ -27,10 +27,9 @@ object HttpClient:
   val RuntimeException: HttpClient        = (_, _) => IO.raiseError(new RuntimeException("Server is dead"))
   val TestTimeoutFailure: HttpClient      = (_, _) => IO.sleep(6.seconds).as("Hello")
   val BackendResourceNotFound: HttpClient = (_, _) =>
-    IO.raiseError {
+    IO.raiseError:
       UnexpectedStatus(
         org.http4s.Status.NotFound,
         org.http4s.Method.GET,
         Uri.unsafeFromString("localhost:8081"),
       )
-    }
