@@ -3,21 +3,21 @@ package com.ghurtchu.loadbalancer.http
 import cats.effect.IO
 import com.comcast.ip4s._
 import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
+import com.ghurtchu.loadbalancer.domain.*
 import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.services.RoundRobin.{BackendsRoundRobin, HealthChecksRoundRobin}
-import com.ghurtchu.loadbalancer.services.{HealthCheckBackends, LoadBalancer, ParseUri, SendAndExpect, UpdateBackendsAndGet}
+import com.ghurtchu.loadbalancer.services.{
+  HealthCheckBackends,
+  LoadBalancer,
+  ParseUri,
+  SendAndExpect,
+  UpdateBackendsAndGet,
+}
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.server.middleware.Logger
 
-object HttpServer {
-
-  sealed trait Status
-
-  object Status {
-    case object Alive extends Status
-    case object Dead  extends Status
-  }
+object HttpServer:
 
   def start(
     backends: Backends,
@@ -30,7 +30,7 @@ object HttpServer {
     backendsRoundRobin: BackendsRoundRobin,
     healthChecksRoundRobin: HealthChecksRoundRobin,
   ): IO[Unit] =
-    (for {
+    (for
       client <- EmberClientBuilder
         .default[IO]
         .build
@@ -63,5 +63,4 @@ object HttpServer {
           healthCheckInterval,
         )
         .toResource
-    } yield ()).useForever
-}
+    yield ()).useForever

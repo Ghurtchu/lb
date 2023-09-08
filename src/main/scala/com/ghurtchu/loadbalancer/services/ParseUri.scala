@@ -4,16 +4,13 @@ import cats.syntax.either._
 import com.ghurtchu.loadbalancer.services.LoadBalancer.InvalidUri
 import org.http4s.Uri
 
-trait ParseUri {
+trait ParseUri:
   def apply(uri: String): Either[InvalidUri, Uri]
-}
 
-object ParseUri {
+object ParseUri:
 
-  def impl: ParseUri = new ParseUri {
+  def impl: ParseUri = new ParseUri:
     override def apply(uri: String): Either[InvalidUri, Uri] =
       Uri
         .fromString(uri)
         .leftMap(_ => InvalidUri(uri))
-  }
-}

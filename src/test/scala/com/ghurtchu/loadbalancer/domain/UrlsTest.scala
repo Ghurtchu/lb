@@ -14,13 +14,13 @@ class UrlsTest extends FunSuite {
   test("next [success]") {
     val urls     = sequentialUrls(1, 5)
     val obtained = urls.next
-    val expected = Urls(sequentialUrls(2, 5).values :+ "url1")
+    val expected = Urls(sequentialUrls(2, 5).values :+ Url("url1"))
 
     assertEquals(obtained, expected)
   }
 
   test("next [1 value]") {
-    val urls     = Urls(Vector("url1"))
+    val urls     = Urls(Vector(Url("url1")))
     val obtained = urls.next
     println(obtained)
     val expected = urls
@@ -60,7 +60,7 @@ class UrlsTest extends FunSuite {
 
   test("remove") {
     val urls     = sequentialUrls(1, 5)
-    val obtained = urls.remove("url1")
+    val obtained = urls.remove(Url("url1"))
     val expected = sequentialUrls(2, 5)
 
     assertEquals(obtained, expected)
@@ -68,8 +68,8 @@ class UrlsTest extends FunSuite {
 
   test("add") {
     val urls     = sequentialUrls(2, 5)
-    val obtained = urls.add("url1")
-    val expected = Urls(urls.values :+ "url1")
+    val obtained = urls.add((Url("url1")))
+    val expected = Urls(urls.values :+ Url("url1"))
 
     assertEquals(obtained, expected)
   }

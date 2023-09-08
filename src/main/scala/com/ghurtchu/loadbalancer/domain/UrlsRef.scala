@@ -2,11 +2,6 @@ package com.ghurtchu.loadbalancer.domain
 
 import cats.effect.{IO, Ref}
 
-trait UrlsRef {
-  def urls: Ref[IO, Urls]
-}
-
-object UrlsRef {
-  final case class Backends(urls: Ref[IO, Urls])     extends UrlsRef
-  final case class HealthChecks(urls: Ref[IO, Urls]) extends UrlsRef
-}
+enum UrlsRef(val urls: Ref[IO, Urls]):
+  case Backends(override val urls: Ref[IO, Urls])     extends UrlsRef(urls)
+  case HealthChecks(override val urls: Ref[IO, Urls]) extends UrlsRef(urls)

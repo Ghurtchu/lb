@@ -1,17 +1,16 @@
 package com.ghurtchu.loadbalancer.services
 
+import com.ghurtchu.loadbalancer.domain.{Url, Urls}
+import com.ghurtchu.loadbalancer.domain.UrlsRef.*
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
-import com.ghurtchu.loadbalancer.domain.Urls
-import com.ghurtchu.loadbalancer.domain.Urls.Url
-import com.ghurtchu.loadbalancer.domain.Backends._
 import munit.FunSuite
 
 class RoundRobinTest extends FunSuite {
 
   test("forBackends [Some, one url]") {
     val roundRobin = RoundRobin.forBackends
-    val urls       = Urls(Vector("localhost:8082"))
+    val urls       = Urls(Vector(Url("localhost:8082")))
 
     (for {
       ref <- IO.ref(urls)
@@ -26,7 +25,7 @@ class RoundRobinTest extends FunSuite {
 
   test("forBackends [Some, multiple urls]") {
     val roundRobin = RoundRobin.forBackends
-    val urls       = Urls(Vector("localhost:8081", "localhost:8082"))
+    val urls       = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
 
     (for {
       ref <- IO.ref(urls)
@@ -54,7 +53,7 @@ class RoundRobinTest extends FunSuite {
 
   test("forHealthChecks [Some, one url]") {
     val roundRobin = RoundRobin.forHealthChecks
-    val urls       = Urls(Vector("localhost:8082"))
+    val urls       = Urls(Vector(Url("localhost:8082")))
 
     (for {
       ref    <- IO.ref(urls)
@@ -65,7 +64,7 @@ class RoundRobinTest extends FunSuite {
 
   test("forHealthChecks [Some, multiple urls]") {
     val roundRobin = RoundRobin.forHealthChecks
-    val urls       = Urls(Vector("localhost:8081", "localhost:8082"))
+    val urls       = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
 
     (for {
       ref <- IO.ref(urls)
@@ -101,7 +100,7 @@ class RoundRobinTest extends FunSuite {
 
   test("forBackends [Some, with stateful Ref updates]") {
     val roundRobin = RoundRobin.forBackends
-    val urls       = Urls(Vector("localhost:8081", "localhost:8082"))
+    val urls       = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
 
     (for {
       ref <- IO.ref(urls)

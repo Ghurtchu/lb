@@ -2,13 +2,14 @@ package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
-import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
-import com.ghurtchu.loadbalancer.http.HttpServer.Status
+import com.ghurtchu.loadbalancer.domain.*
+import com.ghurtchu.loadbalancer.domain.UrlsRef.*
+import com.ghurtchu.loadbalancer.http.ServerStatus
 import com.ghurtchu.loadbalancer.services.RoundRobin.HealthChecksRoundRobin
 
 import scala.concurrent.duration.DurationLong
 
-object HealthCheckBackends {
+object HealthCheckBackends:
 
   def periodically(
     healthChecks: HealthChecks,
@@ -16,15 +17,14 @@ object HealthCheckBackends {
     parseUri: ParseUri,
     updateBackendsAndGet: UpdateBackendsAndGet,
     healthChecksRoundRobin: HealthChecksRoundRobin,
-    sendAndExpectStatus: SendAndExpect[Status],
+    sendAndExpectStatus: SendAndExpect[ServerStatus],
     healthCheckInterval: HealthCheckInterval,
   ): IO[Unit] =
-    (for {
+    (for
       currentUrl <- healthChecksRoundRobin(healthChecks)
-      uri        <- IO.fromEither(parseUri(currentUrl.value))
+      uri        <- IO.fromEither(parseUri(currentUrl.value)).flatTap(IO.println)
       status     <- sendAndExpectStatus(uri)
       _          <- updateBackendsAndGet(backends, currentUrl, status)
-    } yield ())
+    yield ())
       .flatMap(_ => IO.sleep(healthCheckInterval.value.seconds))
       .foreverM
-}

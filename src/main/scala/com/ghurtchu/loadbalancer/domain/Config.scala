@@ -1,15 +1,21 @@
 package com.ghurtchu.loadbalancer.domain
 
 import com.ghurtchu.loadbalancer.domain.Config.HealthCheckInterval
+import com.ghurtchu.loadbalancer.domain.Url
+import pureconfig.ConfigReader
+import pureconfig._
+import pureconfig.generic.derivation.default._
 
 import scala.util.Try
+
+import Config._
 
 final case class Config(
   port: String,
   host: String,
   backends: Urls,
   healthCheckInterval: HealthCheckInterval,
-) {
+) derives ConfigReader:
 
   def hostOr(fallback: String): String =
     if (host.isEmpty) fallback
@@ -18,16 +24,19 @@ final case class Config(
   def portOr(fallback: Int): Int =
     Try(port.toInt).toOption
       .getOrElse(fallback)
-}
 
-object Config {
+object Config:
+
+  given urlsReader: ConfigReader[Urls] = ConfigReader[Vector[Url]].map(Urls.apply)
+  given urlReader: ConfigReader[Url]   = ConfigReader[String].map(Url.apply)
+
+  given healthCheckReader: ConfigReader[HealthCheckInterval] =
+    ConfigReader[Long].map(HealthCheckInterval.apply)
 
   type InvalidConfig = InvalidConfig.type
 
-  final case object InvalidConfig extends Throwable {
+  case object InvalidConfig extends Throwable:
     override def getMessage: String =
       "Invalid port or host, please fix Config"
-  }
 
-  final case class HealthCheckInterval(value: Long) extends AnyVal
-}
+  final case class HealthCheckInterval(value: Long)

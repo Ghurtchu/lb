@@ -2,7 +2,7 @@ package com.ghurtchu.loadbalancer.services
 
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
-import com.ghurtchu.loadbalancer.http.{HttpClient, HttpServer}
+import com.ghurtchu.loadbalancer.http.{HttpClient, HttpServer, ServerStatus}
 import munit.FunSuite
 import org.http4s.{Request, Uri}
 
@@ -39,7 +39,7 @@ class SendAndExpectTest extends FunSuite {
 
     sendAndExpect(backend)
       .map { obtained =>
-        assertEquals(obtained, HttpServer.Status.Alive)
+        assertEquals(obtained, ServerStatus.Alive)
       }
       .unsafeRunSync()
   }
@@ -50,7 +50,7 @@ class SendAndExpectTest extends FunSuite {
 
     sendAndExpect(backend)
       .map { obtained =>
-        assertEquals(obtained, HttpServer.Status.Dead)
+        assertEquals(obtained, ServerStatus.Dead)
       }
       .unsafeRunSync()
   }
@@ -61,7 +61,7 @@ class SendAndExpectTest extends FunSuite {
 
     sendAndExpect(backend)
       .map { obtained =>
-        assertEquals(obtained, HttpServer.Status.Dead)
+        assertEquals(obtained, ServerStatus.Dead)
       }
       .unsafeRunSync()
   }
