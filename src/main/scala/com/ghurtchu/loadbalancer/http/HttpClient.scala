@@ -18,10 +18,10 @@ object HttpClient:
 
   def of(client: Client[IO]): HttpClient = new HttpClient:
     override def sendAndReceive(uri: Uri, requestOpt: Option[Request[IO]]): IO[String] =
-      requestOpt.fold(client.expect[String](uri)) { request =>
-        client.expect[String](request.withUri(uri))
-      }
+      requestOpt match
+        case Some(request) => client.expect[String](request.withUri(uri))
+        case None          => client.expect[String](uri)
 
-  val testSuccess: HttpClient = (_, _) => IO.pure("Hello")
-  val testFailure: HttpClient = (_, _) => IO.raiseError(new RuntimeException("Server is dead"))
-  val testTimeout: HttpClient = (_, _) => IO.sleep(6.seconds).as("Hello")
+  val Hello: HttpClient              = (_, _) => IO.pure("Hello")
+  val RuntimeException: HttpClient   = (_, _) => IO.raiseError(new RuntimeException("Server is dead"))
+  val TestTimeoutFailure: HttpClient = (_, _) => IO.sleep(6.seconds).as("Hello")

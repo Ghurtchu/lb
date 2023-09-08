@@ -4,69 +4,65 @@ import com.ghurtchu.loadbalancer.domain.{Url, Urls}
 import com.ghurtchu.loadbalancer.domain.UrlsRef.*
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
-import munit.FunSuite
+import munit.{CatsEffectSuite, FunSuite}
 
-class RoundRobinTest extends FunSuite {
+class RoundRobinTest extends CatsEffectSuite:
 
-  test("forBackends [Some, one url]") {
+  test("forBackends [Some, one url]"):
     val roundRobin = RoundRobin.forBackends
-    val urls       = Urls(Vector(Url("localhost:8082")))
-
-    (for {
-      ref <- IO.ref(urls)
+    val assertion = for
+      ref <- IO.ref(Urls(Vector(Url("localhost:8082"))))
       backends = Backends(ref)
       assertion1 <- roundRobin(backends)
         .map(_.exists(_.value == "localhost:8082"))
       assertion2 <- roundRobin(backends)
         .map(_.exists(_.value == "localhost:8082"))
-    } yield assert(assertion1 && assertion2))
-      .unsafeRunSync()
-  }
+    yield assertion1 && assertion2
 
-  test("forBackends [Some, multiple urls]") {
+    assertIOBoolean(assertion)
+
+
+  test("forBackends [Some, multiple urls]"):
     val roundRobin = RoundRobin.forBackends
     val urls       = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
-
-    (for {
+    val assertion = for
       ref <- IO.ref(urls)
       backends = Backends(ref)
       assertion1 <- roundRobin(backends)
         .map(_.exists(_.value == "localhost:8081"))
-      assertion2 <- ref.get.map(_.values.map(_.value) == Vector("localhost:8082", "localhost:8081"))
+      assertion2 <- ref.get
+        .map(_.values.map(_.value) == Vector("localhost:8082", "localhost:8081"))
       assertion3 <- roundRobin(backends)
         .map(_.exists(_.value == "localhost:8082"))
       assertion4 <- ref.get.map(_.values.map(_.value) == Vector("localhost:8081", "localhost:8082"))
-    } yield assert(List(assertion1, assertion2, assertion3, assertion4).reduce(_ && _)))
-      .unsafeRunSync()
-  }
+    yield List(assertion1, assertion2, assertion3, assertion4).reduce(_ && _)
 
-  test("forBackends [None]") {
+    assertIOBoolean(assertion)
+
+
+  test("forBackends [None]"):
     val roundRobin = RoundRobin.forBackends
-    val urls       = Urls.empty
-
-    (for {
-      ref    <- IO.ref(urls)
+    val assertion = for
+      ref    <- IO.ref(Urls.empty)
       result <- roundRobin(Backends(ref))
-    } yield assert(result.isEmpty))
-      .unsafeRunSync()
-  }
+    yield result.isEmpty
 
-  test("forHealthChecks [Some, one url]") {
+    assertIOBoolean(assertion)
+
+  test("forHealthChecks [Some, one url]"):
     val roundRobin = RoundRobin.forHealthChecks
-    val urls       = Urls(Vector(Url("localhost:8082")))
-
-    (for {
-      ref    <- IO.ref(urls)
+    val assertion = for
+      ref    <- IO.ref(Urls(Vector(Url("localhost:8082"))))
       result <- roundRobin(HealthChecks(ref))
-    } yield assert(result.value == "localhost:8082"))
-      .unsafeRunSync()
-  }
+    yield result.value == "localhost:8082"
 
-  test("forHealthChecks [Some, multiple urls]") {
+    assertIOBoolean(assertion)
+
+
+  test("forHealthChecks [Some, multiple urls]"):
     val roundRobin = RoundRobin.forHealthChecks
     val urls       = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
-
-    (for {
+    val assertion = for
       ref <- IO.ref(urls)
       healthChecks = HealthChecks(ref)
       assertion1 <- roundRobin(healthChecks)
@@ -77,15 +73,15 @@ class RoundRobinTest extends FunSuite {
         .map(_.value == "localhost:8082")
       assertion4 <- ref.get
         .map(_.values.map(_.value) == Vector("localhost:8081", "localhost:8082"))
-    } yield assert(List(assertion1, assertion2, assertion3, assertion4).reduce(_ && _)))
-      .unsafeRunSync()
-  }
+    yield List(assertion1, assertion2, assertion3, assertion4).reduce(_ && _)
 
-  test("forHealthChecks [Exception, empty urls]") {
+    assertIOBoolean(assertion)
+
+
+  test("forHealthChecks [Exception, empty urls]"):
     val roundRobin = RoundRobin.forHealthChecks
     val urls       = Urls(Vector.empty)
-
-    (for {
+    val assertion = for
       ref    <- IO.ref(urls)
       result <- roundRobin(HealthChecks(ref))
         .as(false)
@@ -94,15 +90,14 @@ class RoundRobinTest extends FunSuite {
           case _: NoSuchElementException => true
           case _                         => false
         }
-    } yield assert(result))
-      .unsafeRunSync()
-  }
+    yield result
 
-  test("forBackends [Some, with stateful Ref updates]") {
+    assertIOBoolean(assertion)
+
+  test("forBackends [Some, with stateful Ref updates]"):
     val roundRobin = RoundRobin.forBackends
     val urls       = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
-
-    (for {
+    val assertion = for
       ref <- IO.ref(urls)
       backends = Backends(ref)
       assertion1 <- roundRobin(backends) // 8082, 8081
@@ -121,7 +116,7 @@ class RoundRobinTest extends FunSuite {
         .map(_.exists(_.value == "localhost:8081"))
       assertion5 <- roundRobin(backends)
         .map(_.exists(_.value == "localhost:8083"))
-    } yield assert(List(assertion1, assertion2, assertion3, assertion4, assertion5).reduce(_ && _)))
-      .unsafeRunSync()
-  }
-}
+    yield List(assertion1, assertion2, assertion3, assertion4, assertion5).reduce(_ && _)
+
+    assertIOBoolean(assertion)
+

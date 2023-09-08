@@ -1,4 +1,4 @@
 package com.ghurtchu.loadbalancer.http
 
-enum ServerStatus:
+enum ServerHealthStatus:
   case Alive, Dead

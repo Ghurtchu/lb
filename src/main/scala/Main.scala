@@ -20,25 +20,19 @@ object Main extends IOApp.Simple:
     for {
       config <- IO(ConfigSource.default.loadOrThrow[Config])
       backendUrls = config.backends
-      backendsRef     <- IO.ref(backendUrls)
-      healthChecksRef <- IO.ref(backendUrls)
-      hostAndPort     <- IO
-        .fromEither {
-          hostAndPort(
-            config.hostOr(fallback = "0.0.0.0"),
-            config.portOr(fallback = 8080),
-          )
-        }
+      backends     <- IO.ref(backendUrls)
+      healthChecks <- IO.ref(backendUrls)
+      hostAndPort  <- IO.fromEither(hostAndPort(config.host, config.port))
       (host, port) = hostAndPort
       _ <- info"Starting server on $host:$port"
       _ <- HttpServer.start(
-        Backends(backendsRef),
-        HealthChecks(healthChecksRef),
+        Backends(backends),
+        HealthChecks(healthChecks),
         port,
         host,
         config.healthCheckInterval,
-        ParseUri.impl,
-        UpdateBackendsAndGet.impl,
+        ParseUri.Impl,
+        UpdateBackendsAndGet.Impl,
         RoundRobin.forBackends,
         RoundRobin.forHealthChecks,
       )

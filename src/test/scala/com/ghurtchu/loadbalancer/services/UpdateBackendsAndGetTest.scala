@@ -3,38 +3,31 @@ package com.ghurtchu.loadbalancer.services
 import com.ghurtchu.loadbalancer.domain.{Url, Urls}
 import com.ghurtchu.loadbalancer.domain.UrlsRef.Backends
 import com.ghurtchu.loadbalancer.http.HttpServer
-import com.ghurtchu.loadbalancer.http.ServerStatus
-
+import com.ghurtchu.loadbalancer.http.ServerHealthStatus
 import cats.effect.IO
-import cats.effect.unsafe.implicits.global
+import munit.CatsEffectSuite
 
-import munit.FunSuite
+class UpdateBackendsAndGetTest extends CatsEffectSuite:
 
-class UpdateBackendsAndGetTest extends FunSuite {
+  val updateBackendsAndGet = UpdateBackendsAndGet.Impl
+  val localhost8083            = "localhost:8083"
+  val initialUrls = Vector("localhost:8081", "localhost:8082").map(Url.apply)
 
-  val updateBackendsAndGet = UpdateBackendsAndGet.impl
-  val localhost            = "localhost:8083"
-
-  test("Alive") {
-    val status = ServerStatus.Alive
-    val urls   = Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply))
-
-    (for {
+  test("Add the passed url to the Backends when the server status is Alive"):
+    val urls = Urls(initialUrls)
+    val obtained = for
       ref     <- IO.ref(urls)
-      updated <- updateBackendsAndGet(Backends(ref), Url(localhost), status)
-    } yield updated.values == (urls.values :+ localhost))
-      .unsafeRunSync()
-  }
+      updated <- updateBackendsAndGet(Backends(ref), Url(localhost8083), ServerHealthStatus.Alive)
+    yield updated
 
-  test("Dead") {
-    val status = ServerStatus.Dead
-    val urls   = Urls(Vector("localhost:8081", "localhost:8082", localhost).map(Url.apply))
+    assertIO(obtained, Urls(initialUrls :+ Url(localhost8083)))
 
-    (for {
+  test("Add the passed url to the Backends when the server status is Dead"):
+    val urls   = Urls(initialUrls :+ Url(localhost8083))
+    val obtained = for
       ref     <- IO.ref(urls)
-      updated <- updateBackendsAndGet(Backends(ref), Url(localhost), status)
-    } yield updated.values == Vector("localhost:8081", "localhost:8082"))
-      .unsafeRunSync()
-  }
+      updated <- updateBackendsAndGet(Backends(ref), Url(localhost8083), ServerHealthStatus.Dead)
+    yield updated
 
-}
+    assertIO(obtained, Urls(initialUrls))
+

@@ -1,11 +1,12 @@
 package com.ghurtchu.loadbalancer.http
 
 import cats.effect.IO
-import com.comcast.ip4s._
+import com.comcast.ip4s.*
 import com.ghurtchu.loadbalancer.domain.*
 import com.ghurtchu.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import com.ghurtchu.loadbalancer.services.RoundRobin.{BackendsRoundRobin, HealthChecksRoundRobin}
 import com.ghurtchu.loadbalancer.services.{
+  AddRequestPathToBackendUrl,
   HealthCheckBackends,
   LoadBalancer,
   ParseUri,
@@ -35,12 +36,13 @@ object HttpServer:
         .build
       httpClient = HttpClient.of(client)
       httpApp    = Logger
-        .httpApp(logHeaders = true, logBody = true) {
+        .httpApp(logHeaders = false, logBody = true) {
           LoadBalancer
             .from(
               backends,
               SendAndExpect.toBackend(httpClient, _),
               parseUri,
+              AddRequestPathToBackendUrl.Impl,
               backendsRoundRobin,
             )
             .orNotFound

@@ -3,7 +3,7 @@ package com.ghurtchu.loadbalancer.services
 import cats.effect.IO
 import com.ghurtchu.loadbalancer.domain.*
 import com.ghurtchu.loadbalancer.domain.UrlsRef.*
-import com.ghurtchu.loadbalancer.http.ServerStatus
+import com.ghurtchu.loadbalancer.http.ServerHealthStatus
 import com.ghurtchu.loadbalancer.services.RoundRobin.HealthChecksRoundRobin
 
 import scala.concurrent.duration.DurationLong
@@ -16,7 +16,7 @@ object HealthCheckBackends:
     parseUri: ParseUri,
     updateBackendsAndGet: UpdateBackendsAndGet,
     healthChecksRoundRobin: HealthChecksRoundRobin,
-    sendAndExpectStatus: SendAndExpect[ServerStatus],
+    sendAndExpectStatus: SendAndExpect[ServerHealthStatus],
     healthCheckInterval: HealthCheckInterval,
   ): IO[Unit] =
     (for

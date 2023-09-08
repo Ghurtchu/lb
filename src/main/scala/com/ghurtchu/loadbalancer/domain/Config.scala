@@ -10,24 +10,17 @@ import scala.util.Try
 import Config._
 
 final case class Config(
-  port: String,
+  port: Int,
   host: String,
   backends: Urls,
   healthCheckInterval: HealthCheckInterval,
-) derives ConfigReader:
-
-  def hostOr(fallback: String): String =
-    if (host.isEmpty) fallback
-    else host
-
-  def portOr(fallback: Int): Int =
-    Try(port.toInt).toOption
-      .getOrElse(fallback)
+) derives ConfigReader
 
 object Config:
 
   given urlsReader: ConfigReader[Urls] = ConfigReader[Vector[Url]].map(Urls.apply)
-  given urlReader: ConfigReader[Url]   = ConfigReader[String].map(Url.apply)
+
+  given urlReader: ConfigReader[Url] = ConfigReader[String].map(Url.apply)
 
   given healthCheckReader: ConfigReader[HealthCheckInterval] =
     ConfigReader[Long].map(HealthCheckInterval.apply)

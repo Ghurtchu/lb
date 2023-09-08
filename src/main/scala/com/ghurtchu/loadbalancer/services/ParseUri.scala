@@ -9,7 +9,7 @@ trait ParseUri:
 
 object ParseUri:
 
-  def impl: ParseUri = new ParseUri:
+  object Impl extends ParseUri:
     override def apply(uri: String): Either[InvalidUri, Uri] =
       Uri
         .fromString(uri)

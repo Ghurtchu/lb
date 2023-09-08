@@ -1,6 +1,6 @@
 package com.ghurtchu.loadbalancer.services
 
-import com.ghurtchu.loadbalancer.http.{HttpClient, ServerStatus}
+import com.ghurtchu.loadbalancer.http.{HttpClient, ServerHealthStatus}
 import org.http4s.client.UnexpectedStatus
 import org.http4s.{Request, Uri}
 import cats.syntax.option.*
@@ -8,6 +8,7 @@ import cats.effect.IO
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import org.typelevel.log4cats.syntax.*
+import cats.syntax.applicative._
 
 import scala.concurrent.duration.DurationInt
 
@@ -25,20 +26,22 @@ object SendAndExpect:
           .sendAndReceive(uri, req.some)
           .handleErrorWith {
             case _: UnexpectedStatus =>
-              IO.pure(s"resource at uri: $uri was not found")
+              s"resource at uri: $uri was not found"
+                .pure[IO]
                 .flatTap(msg => warn"$msg")
             case _                   =>
-              IO.pure(s"server with uri: $uri is dead")
+              s"server with uri: $uri is dead"
+                .pure[IO]
                 .flatTap(msg => warn"$msg")
           }
 
-  def toHealthCheck(httpClient: HttpClient): SendAndExpect[ServerStatus] =
-    new SendAndExpect[ServerStatus]:
-      override def apply(uri: Uri): IO[ServerStatus] =
+  def toHealthCheck(httpClient: HttpClient): SendAndExpect[ServerHealthStatus] =
+    new SendAndExpect[ServerHealthStatus]:
+      override def apply(uri: Uri): IO[ServerHealthStatus] =
         info"[HEALTH-CHECK] checking $uri health" *>
           httpClient
             .sendAndReceive(uri, none)
-            .as(ServerStatus.Alive)
+            .as(ServerHealthStatus.Alive)
             .flatTap(ss => info"$uri is alive")
             .timeout(5.seconds)
-            .handleErrorWith(_ => warn"$uri is dead" *> IO.pure(ServerStatus.Dead))
+            .handleErrorWith(_ => warn"$uri is dead" *> IO.pure(ServerHealthStatus.Dead))

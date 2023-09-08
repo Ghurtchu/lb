@@ -26,6 +26,6 @@ object RoundRobin:
         .getAndUpdate(_.next)
         .map(_.currentUnsafe)
 
-  val testId: RoundRobin[Id] = _ => IO.pure(Url("localhost:8081"))
+  val TestId: RoundRobin[Id] = _ => IO.pure(Url("localhost:8081"))
 
-  val testOpt: RoundRobin[Option] = _ => IO.pure(Some(Url("localhost:8081")))
+  val TestOpt: RoundRobin[Option] = _ => IO.pure(Some(Url("localhost:8081")))

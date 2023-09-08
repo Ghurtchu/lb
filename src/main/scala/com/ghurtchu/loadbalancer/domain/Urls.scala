@@ -1,7 +1,5 @@
 package com.ghurtchu.loadbalancer.domain
 
-import com.ghurtchu.loadbalancer.domain.Url
-
 import scala.util.Try
 
 final case class Urls(values: Vector[Url]):
